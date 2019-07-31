@@ -96,7 +96,10 @@
             },
             submitHandler: function (data) {
                 this.isOpen = false
-                this.$emit('update:date-range', data)
+                this.$emit('update:date-range', {
+                    from: data.startDate.getTime(),
+                    to: data.endDate.getTime(),
+                })
             }
         },
         computed: {
@@ -107,10 +110,10 @@
                 }
             },
             startDate(){
-                return (typeof this.dateRange.startDate === 'object') ? this.dateRange.startDate : new Date(this.dateRange.startDate)
+                return (typeof this.dateRange.from === 'object') ? this.dateRange.from : new Date(this.dateRange.from)
             },
             endDate(){
-                return (typeof this.dateRange.endDate === 'object') ? this.dateRange.endDate : new Date(this.dateRange.endDate)
+                return (typeof this.dateRange.to === 'object') ? this.dateRange.to : new Date(this.dateRange.to)
             },
         },
         data() {

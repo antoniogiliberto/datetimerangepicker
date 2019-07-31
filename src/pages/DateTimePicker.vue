@@ -7,8 +7,8 @@
                 :singleDate="singleDate"
                 timeFormat="HH:mm"
             />
-            <button @click="dateRange.startDate = new Date('2018-01-01 00:00:00')">Last year</button>
-            <button @click="dateRange.endDate = new Date('2018-12-01 00:00:00')">full year</button>
+            <button @click="dateRange.from = new Date('2018-01-01 00:00:00').getTime()">Last year</button>
+            <button @click="dateRange.to = new Date('2018-12-01 00:00:00').getTime()">full year</button>
         </section>
 
         <section class="resultSection">
@@ -45,8 +45,8 @@
                 singleDate: false,
                 dateTimePickerValue: "",
                 dateRange: {
-                    startDate: new Date().getTime(),
-                    endDate: new Date().getTime(),
+                    from: new Date().getTime(),
+                    to: new Date().getTime(),
                 }
             }
         },
