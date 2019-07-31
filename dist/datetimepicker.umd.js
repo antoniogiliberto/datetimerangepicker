@@ -493,6 +493,17 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 /***/ }),
 
+/***/ "0767":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_f3ae9cfc_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("e378");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_f3ae9cfc_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_f3ae9cfc_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_f3ae9cfc_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "07e3":
 /***/ (function(module, exports) {
 
@@ -3294,13 +3305,6 @@ $export($export.P + $export.F * !__webpack_require__("2f21")([].map, true), 'Arr
 
 /***/ }),
 
-/***/ "6ec9":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
 /***/ "71c1":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3786,15 +3790,15 @@ module.exports = function (fn, that, length) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"01a5103f-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DateTimePicker.vue?vue&type=template&id=9336155c&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"wrapper",staticClass:"dateTimePickerWrapper"},[_c('a',{staticClass:"calendarTrigger",class:_vm.isOpen ? 'active' : '',on:{"click":_vm.openHandler}},[_c('icon-calendar',{staticClass:"iconCalendar"}),_c('input',{staticClass:"calendarInput",attrs:{"type":"text","readonly":"readonly"},domProps:{"value":_vm.selectDateString}})],1),(_vm.isOpen)?_c('date-time-picker-modal',{class:{ fadeInDown: _vm.isOpen },style:({
-      marginLeft: ("-" + _vm.shiftMarginLeft + "px"),
-      marginTop: ("-" + _vm.shiftMarginHeight + "px")
-    }),attrs:{"singleDate":_vm.singleDate,"startDate":_vm.startDate,"endDate":_vm.endDate,"timeFormat":_vm.timeFormat},on:{"submitHandler":_vm.submitHandler,"cancelHandler":function($event){_vm.isOpen = false}}}):_vm._e()],1)}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"01a5103f-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DateTimePicker.vue?vue&type=template&id=f3ae9cfc&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"wrapper",staticClass:"dateTimePickerWrapper"},[_c('a',{staticClass:"calendarTrigger",class:_vm.isOpen ? 'active' : '',on:{"click":_vm.openHandler}},[_c('icon-calendar',{staticClass:"iconCalendar"}),_c('input',{staticClass:"calendarInput",attrs:{"readonly":"readonly","type":"text"},domProps:{"value":_vm.selectDateString}})],1),(_vm.isOpen)?_c('date-time-picker-modal',{class:{ fadeInDown: _vm.isOpen },style:({
+    marginLeft: ("-" + _vm.shiftMarginLeft + "px"),
+    marginTop: ("-" + _vm.shiftMarginHeight + "px")
+  }),attrs:{"endDate":_vm.endDate,"singleDate":_vm.singleDate,"startDate":_vm.startDate,"timeFormat":_vm.timeFormat},on:{"cancelHandler":function($event){_vm.isOpen = false},"submitHandler":_vm.submitHandler}}):_vm._e()],1)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/DateTimePicker.vue?vue&type=template&id=9336155c&scoped=true&
+// CONCATENATED MODULE: ./src/components/DateTimePicker.vue?vue&type=template&id=f3ae9cfc&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/objectSpread.js + 1 modules
 var objectSpread = __webpack_require__("cebc");
@@ -4001,24 +4005,28 @@ var DateTimePickervue_type_script_lang_js_getDateString = function _getDateStrin
       return this.callOnChange(data);
     }
   },
+  computed: {
+    selectDateString: function selectDateString() {
+      var startDate = this.startDate,
+          endDate = this.endDate;
+      return !this.startDate ? "" : this.getDateString({
+        startDate: startDate,
+        endDate: endDate
+      });
+    }
+  },
   data: function data() {
-    var startDate = this.startDate,
-        endDate = this.endDate;
     return {
       isOpen: false,
       shiftMarginLeft: 0,
-      shiftMarginHeight: 0,
-      selectDateString: !startDate ? "" : this.getDateString({
-        startDate: startDate,
-        endDate: endDate
-      })
+      shiftMarginHeight: 0
     };
   }
 });
 // CONCATENATED MODULE: ./src/components/DateTimePicker.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_DateTimePickervue_type_script_lang_js_ = (DateTimePickervue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/DateTimePicker.vue?vue&type=style&index=0&id=9336155c&lang=scss&scoped=true&
-var DateTimePickervue_type_style_index_0_id_9336155c_lang_scss_scoped_true_ = __webpack_require__("a80d");
+// EXTERNAL MODULE: ./src/components/DateTimePicker.vue?vue&type=style&index=0&id=f3ae9cfc&lang=scss&scoped=true&
+var DateTimePickervue_type_style_index_0_id_f3ae9cfc_lang_scss_scoped_true_ = __webpack_require__("0767");
 
 // CONCATENATED MODULE: ./src/components/DateTimePicker.vue
 
@@ -4035,7 +4043,7 @@ var DateTimePicker_component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "9336155c",
+  "f3ae9cfc",
   null
   
 )
@@ -4278,17 +4286,6 @@ module.exports = __webpack_require__("8aae");
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("f410");
-
-/***/ }),
-
-/***/ "a80d":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_9336155c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("6ec9");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_9336155c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_9336155c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePicker_vue_vue_type_style_index_0_id_9336155c_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -5312,6 +5309,13 @@ module.exports = (
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("ed33");
+
+/***/ }),
+
+/***/ "e378":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
 
 /***/ }),
 

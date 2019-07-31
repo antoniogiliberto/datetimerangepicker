@@ -1,5 +1,5 @@
 {
-  "name": "@giliweb/datetimepicker",
+  "name": "@giliweb/datetimerangepicker",
   "main": "./dist/datetimepicker.common.js",
   "module": "dist/datetimepicker.esm.js",
   "unpkg": "dist/datetimepicker.min.js",
