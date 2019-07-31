@@ -1,5 +1,5 @@
 {
-  "name": "@lazy-copilot/datetimepicker",
+  "name": "@giliweb/datetimepicker",
   "main": "./dist/datetimepicker.common.js",
   "module": "dist/datetimepicker.esm.js",
   "unpkg": "dist/datetimepicker.min.js",
@@ -61,7 +61,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lazy-bee/components.git"
+    "url": "git+https://github.com/antoniogiliberto/datetimerangepicker.git"
   },
   "keywords": [
     "vue",
@@ -77,9 +77,5 @@
     "format"
   ],
   "author": "Antonio Giliberto",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lazy-bee/components/issues"
-  },
-  "homepage": "https://github.com/lazy-bee/components/tree/master/packages/dateTimePicker#readme"
+  "license": "ISC"
 }

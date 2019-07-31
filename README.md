@@ -3,9 +3,6 @@
 > RWD friendly date+time picker for Vue. Supports date, datetime and time modes, and disabling dates.
 
 
-[![NPM](https://nodei.co/npm/@lazy-copilot/datetimepicker.png?downloads=true&downloadRank=true)](https://www.npmjs.com/package/@lazy-copilot/datetimepicker)
-
-
 
 The `DateTimePicker` components  are designed to fit all  `date` and `time` selection, including features of :
  - Drop down Date&Time Picker.
@@ -26,16 +23,16 @@ The `DateTimePicker` components  are designed to fit all  `date` and `time` sele
 
 ## Install
 ```
-$ npm install @lazy-copilot/datetimepicker
+$ npm install @giliweb/datetimepicker
 
 or 
 
-$ yarn add @lazy-copilot/datetimepicker
+$ yarn add @giliweb/datetimepicker
 ```
 
 
 ## Props and @Event
-Bascilly we initalize the `dateTimePicker` component by given props, the common use case is to reassign date and time to a data.
+Basically we initialize the `dateTimePicker` component by given props, the common use case is to reassign date and time to a data.
 
 And we get the updated value by vue @event `@onChange="data=$event"`.
 
@@ -67,8 +64,8 @@ And we get the updated value by vue @event `@onChange="data=$event"`.
 </template>
 
 <script>
-import '@lazy-copilot/datetimepicker/dist/datetimepicker.css'
-import { DateTimePicker } from "@lazy-copilot/datetimepicker";
+import '@giliweb/datetimerangepicker/dist/datetimepicker.css'
+import { DateTimePicker } from "@giliweb/datetimerangepicker";
 
 export default {
   name: "app",
@@ -105,10 +102,10 @@ To See more example, please checkout `./demo/src/App.vue`.
 
 ```js
 
-import { DateTimePicker } from "@lazy-copilot/datetimepicker";
-import { DateTimePickerModal } from "@lazy-copilot/datetimepicker";
-import { DatePicker } from "@lazy-copilot/datetimepicker";
-import { TimePicker } from "@lazy-copilot/datetimepicker";
+import { DateTimePicker } from "@giliweb/datetimerangepicker";
+import { DateTimePickerModal } from "@giliweb/datetimerangepicker";
+import { DatePicker } from "@giliweb/datetimerangepicker";
+import { TimePicker } from "@giliweb/datetimerangepicker";
 
 ```
 
