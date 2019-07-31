@@ -1,0 +1,87 @@
+{
+  "name": "@lazy-copilot/datetimepicker",
+  "main": "./dist/datetimepicker.common.js",
+  "module": "dist/datetimepicker.esm.js",
+  "unpkg": "dist/datetimepicker.min.js",
+  "browser": {
+    "./sfc": "src/components/datetimepicker.vue"
+  },
+  "version": "0.1.47",
+  "scripts": {
+    "precommit": "lint-staged; npm test",
+    "dev": "npm run serve",
+    "serve": "vue-cli-service serve",
+    "lint": "vue-cli-service lint",
+    "build-bundle": "vue-cli-service build --target lib --name datetimepicker src/build.js",
+    "prepublish": "npm run build-bundle",
+    "test": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "vue": "^2.6.10"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.9.2",
+    "@vue/cli-plugin-eslint": "^3.9.2",
+    "@vue/cli-plugin-unit-jest": "^3.9.0",
+    "@vue/cli-service": "^3.9.3",
+    "@vue/eslint-config-prettier": "^5.0.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.2",
+    "babel-jest": "^24.8.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "lint-staged": "^9.2.1",
+    "vue-highlightjs": "^1.3.3",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged; npm test"
+  },
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ],
+  "description": "## Project setup ``` npm install ```",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lazy-bee/components.git"
+  },
+  "keywords": [
+    "vue",
+    "component",
+    "date",
+    "time",
+    "picker",
+    "range",
+    "selection",
+    "select",
+    "hotel",
+    "flight",
+    "format"
+  ],
+  "author": "Antonio Giliberto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lazy-bee/components/issues"
+  },
+  "homepage": "https://github.com/lazy-bee/components/tree/master/packages/dateTimePicker#readme"
+}
