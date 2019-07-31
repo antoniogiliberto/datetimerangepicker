@@ -1,36 +1,3 @@
-<template>
-    <div class="dateTimePickerWrapper" ref="wrapper">
-        <a
-            :class="isOpen ? 'active' : ''"
-            @click="openHandler"
-            class="calendarTrigger"
-        >
-            <icon-calendar class="iconCalendar"/>
-            <input
-                :value="selectDateString"
-                class="calendarInput"
-                readonly="readonly"
-                type="text"
-            />
-        </a>
-
-        <date-time-picker-modal
-            :class="{ fadeInDown: isOpen }"
-            :endDate="endDate"
-            :singleDate="singleDate"
-            :startDate="startDate"
-            :style="{
-        marginLeft: `-${shiftMarginLeft}px`,
-        marginTop: `-${shiftMarginHeight}px`
-      }"
-            :timeFormat="timeFormat"
-            @cancelHandler="isOpen = false"
-            @submitHandler="submitHandler"
-            v-if="isOpen"
-        />
-    </div>
-</template>
-
 <script>
     import DateTimePickerModal from "./DateTimePickerModal.vue"
     import iconCalendar from "./Icons/Calendar.vue"
@@ -63,8 +30,9 @@
         name: "DateTimePicker",
         components: {DateTimePickerModal, iconCalendar},
         props: {
-            startDate: Date,
-            endDate: Date,
+            dateRange: {
+                type: Object
+            },
             timeFormat: {
                 type: String,
                 default: "hh:mm:A"
@@ -128,32 +96,70 @@
             },
             submitHandler: function (data) {
                 this.isOpen = false
-                this.selectDateString = this.getDateString(data)
-                return this.callOnChange(data)
+                this.$emit('update:date-range', data)
             }
         },
         computed: {
-            selectDateString(){
-                const {startDate, endDate} = this
-                return !this.startDate
-                    ? ""
-                    : this.getDateString({
-                        startDate,
-                        endDate
-                    })
-            }
+            dateString: {
+                get(){
+                    const {startDate, endDate} = this
+                    return this.getDateString({startDate, endDate})
+                }
+            },
+            startDate(){
+                return (typeof this.dateRange.startDate === 'object') ? this.dateRange.startDate : new Date(this.dateRange.startDate)
+            },
+            endDate(){
+                return (typeof this.dateRange.endDate === 'object') ? this.dateRange.endDate : new Date(this.dateRange.endDate)
+            },
         },
         data() {
-
             return {
                 isOpen: false,
                 shiftMarginLeft: 0,
-                shiftMarginHeight: 0,
-
+                shiftMarginHeight: 0
             }
-        }
+        },
+        // beforeMount() {
+        //     let startDate = (typeof this.startDate === 'object') ? this.startDate : new Date(this.startDate)
+        //     let endDate = (typeof this.endDate === 'object') ? this.endDate : new Date(this.endDate)
+        //     this.selectedDate = { startDate, endDate }
+        // }
     }
 </script>
+
+<template>
+    <div class="dateTimePickerWrapper" ref="wrapper">
+        <a
+            :class="isOpen ? 'active' : ''"
+            @click="openHandler"
+            class="calendarTrigger"
+        >
+            <icon-calendar class="iconCalendar"/>
+            <input
+                :value="dateString"
+                class="calendarInput"
+                readonly="readonly"
+                type="text"
+            />
+        </a>
+
+        <date-time-picker-modal
+            :class="{ fadeInDown: isOpen }"
+            :singleDate="singleDate"
+            :endDate="endDate"
+            :startDate="startDate"
+            :style="{
+        marginLeft: `-${shiftMarginLeft}px`,
+        marginTop: `-${shiftMarginHeight}px`
+      }"
+            :timeFormat="timeFormat"
+            @cancelHandler="isOpen = false"
+            @submitHandler="submitHandler"
+            v-if="isOpen"
+        />
+    </div>
+</template>
 
 <style lang="scss" scoped>
     @import "../style/main.scss";
