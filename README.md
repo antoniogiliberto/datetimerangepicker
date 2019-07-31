@@ -1,4 +1,4 @@
-# @lazy-copilot/datetimepicker
+# @giliweb/datetimerangepicker
 
 > RWD friendly date+time picker for Vue. Supports date, datetime and time modes, and disabling dates.
 
@@ -115,4 +115,5 @@ The `time-picker` here is a customized version of the awesome project `vue2-time
 
 ### Reference
  - [vue2-timepicker](https://github.com/phoenixwong/vue2-timepicker)
+ - [@lazy-copilot/datetimepicker](https://github.com/lazy-bee/components/tree/master/packages/dateTimePicker#readme)
 
