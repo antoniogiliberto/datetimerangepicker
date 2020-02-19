@@ -6,7 +6,7 @@
           <span>{{ weekday }}</span>
         </li>
       </template>
-      <template v-for="(day, key) in startWeekday">
+      <template v-if="!ignoreStartWeekDay" v-for="(day, key) in startWeekday">
         <li class="day" :key="'null' + key">
           <!-- <span class="nullBlock"></span> -->
         </li>
@@ -56,6 +56,10 @@ export default {
     endDate: Date,
     onChange: Function,
     singleDate: {
+      type: Boolean,
+      default: false
+    },
+    ignoreStartWeekDay: {
       type: Boolean,
       default: false
     }
