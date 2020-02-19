@@ -1,29 +1,15 @@
 <script>
     import DateTimePickerModal from "./DateTimePickerModal.vue"
     import iconCalendar from "./Icons/Calendar.vue"
-    import utils from "../lib/date"
-    import {getTimeObjectFromDate} from "../lib/time"
+    import moment from 'moment'
 
     const BOX_LENGTH = 750 //px
     const BOX_HEIGHT = 510 //px
     const RWD_THRESHOLD_W = 700
 
-    const _getDateString = (date, format = "hh:mm:A") => {
+    const _getDateString = (date, format = "YYYY MMM DD HH:mm A") => {
         if (!date) return ""
-
-        const startYear = date.getFullYear()
-        const startMonth = utils.monthShortConfig[date.getMonth()]
-        const starDate = date.getDate()
-
-        const timeObject = getTimeObjectFromDate(date, format)
-        const hh = timeObject.hh
-        const HH = timeObject.HH
-        const mm = timeObject.mm
-        const a = timeObject.A
-
-        if (HH) return `${startYear} ${startMonth} ${starDate}  ${HH}:${mm}`
-
-        return `${startYear} ${startMonth} ${starDate}  ${hh}:${mm} ${a}`
+        return moment(date).format(format)
     }
 
     export default {
@@ -33,9 +19,9 @@
             dateRange: {
                 type: Object
             },
-            timeFormat: {
+            format: {
                 type: String,
-                default: "hh:mm:A"
+                default: "YYYY MMM DD HH:mm A"
             },
             singleDate: {
                 type: Boolean,
@@ -76,13 +62,13 @@
                 return (this.isOpen = !this.isOpen)
             },
             getDateString: function (data) {
-                const {singleDate, timeFormat} = this
+                const {singleDate, format} = this
                 const {startDate, endDate} = data
                 return singleDate
-                    ? _getDateString(startDate, timeFormat)
-                    : `${_getDateString(startDate, timeFormat)} - ${_getDateString(
+                    ? _getDateString(startDate, format)
+                    : `${_getDateString(startDate, format)} - ${_getDateString(
                         endDate,
-                        timeFormat
+                        format
                     )}`
             },
             callOnChange: function (returnData) {
@@ -149,6 +135,7 @@
 
         <date-time-picker-modal
             :class="{ fadeInDown: isOpen }"
+            :resetToDefaultTime="true"
             :singleDate="singleDate"
             :endDate="endDate"
             :startDate="startDate"
@@ -156,7 +143,7 @@
         marginLeft: `-${shiftMarginLeft}px`,
         marginTop: `-${shiftMarginHeight}px`
       }"
-            :timeFormat="timeFormat"
+            :format="format"
             @cancelHandler="isOpen = false"
             @submitHandler="submitHandler"
             v-if="isOpen"

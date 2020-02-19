@@ -5,7 +5,7 @@
             <DateTimePicker
                 v-bind:date-range.sync="dateRange"
                 :singleDate="singleDate"
-                timeFormat="HH:mm"
+                format="YYYY MMM DD HH:mm A"
             />
             <button @click="dateRange.from = new Date('2018-01-01 00:00:00').getTime()">Last year</button>
             <button @click="dateRange.to = new Date('2018-12-01 00:00:00').getTime()">full year</button>
@@ -59,7 +59,7 @@
 <style lang="scss" scoped>
     .timepickerWrapper {
         width: 100%;
-        max-width: 600px;
+        max-width: 800px;
         margin: auto;
         margin-top: 300px;
 

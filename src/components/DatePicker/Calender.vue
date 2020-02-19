@@ -1,39 +1,3 @@
-<template>
-  <div>
-    <ul class="calendar">
-      <template v-for="(weekday, key) in weekdays">
-        <li class="weekday" :key="'weekday' + key">
-          <span>{{ weekday }}</span>
-        </li>
-      </template>
-      <template v-if="!ignoreStartWeekDay" v-for="(day, key) in startWeekday">
-        <li class="day" :key="'null' + key">
-          <!-- <span class="nullBlock"></span> -->
-        </li>
-      </template>
-      <template v-for="(day, key) in daysCount">
-        <li class="day" :key="'day' + key">
-          <span
-            v-if="!singleDate"
-            :class="getDayStyle(day)"
-            @click="updateSelectingDay(day)"
-          >
-            {{ day }}
-          </span>
-
-          <span
-            v-if="singleDate"
-            :class="getDayStyle(day)"
-            @click="updateSelectingSingleDay(day)"
-          >
-            {{ day }}
-          </span>
-        </li>
-      </template>
-    </ul>
-  </div>
-</template>
-
 <script>
 import utils from "../../lib/date";
 
@@ -74,6 +38,10 @@ export default {
         return this.onChange({ ...returnData });
       }
     },
+    substractDayPrevMonth(days){
+      const lastDayPrevMonth = new Date(new Date(this.year, this.month, 0).getTime()).getDate();
+      return lastDayPrevMonth - days
+    },
     updateSelectingSingleDay: function(day) {
       if (!day) return;
 
@@ -88,7 +56,7 @@ export default {
         startDate: this.innerStartDate
       });
     },
-    updateSelectingDay: function(day) {
+    updateSelectingDay: function(day, whichMonth = 'current') {
       if (!day) return;
 
       const {
@@ -137,11 +105,20 @@ export default {
   },
   computed: {
     startWeekday: function() {
-      return utils.getWeekday(
+      const weekday = utils.getWeekday(
         new Date(`${this.year}-${this.month + 1}-01`).getTime()
       );
+      const a = []
+      let i
+      for(i = 1; i < weekday; i++){
+        a.push(weekday - 1 - i)
+      }
+      return weekday === 0 ? [5,4,3,2,1,0] : a
     },
-
+    endWeekday: function() {
+      const weekday = new Date(new Date(this.year, this.month + 1, 0).getTime()).getDay();
+      return weekday > 0 ? 7 - weekday : 0
+    },
     daysCount: function() {
       return utils.daysInMonth(this.year, this.month);
     }
@@ -159,6 +136,50 @@ export default {
 };
 </script>
 
+<template>
+  <div>
+    <ul class="calendar">
+      <template v-for="(weekday, key) in weekdays">
+        <li class="weekday" :key="'weekday' + key">
+          <span>{{ weekday }}</span>
+        </li>
+      </template>
+      <template v-if="!ignoreStartWeekDay" v-for="(day, key) in startWeekday">
+        <li class="day" :key="'before' + key">
+          <span
+              class="nullBlock"
+          >{{substractDayPrevMonth(day)}}</span>
+        </li>
+      </template>
+      <template v-for="(day, key) in daysCount">
+        <li class="day" :key="'day' + key">
+          <span
+              v-if="!singleDate"
+              :class="getDayStyle(day)"
+              @click="updateSelectingDay(day)"
+          >
+            {{ day }}
+          </span>
+
+          <span
+              v-if="singleDate"
+              :class="getDayStyle(day)"
+              @click="updateSelectingSingleDay(day)"
+          >
+            {{ day }}
+          </span>
+        </li>
+      </template>
+      <template v-if="!ignoreStartWeekDay" v-for="(day, key) in endWeekday">
+        <li class="day" :key="'after' + key">
+          <span
+              class="nullBlock"
+          >{{day}}</span>
+        </li>
+      </template>
+    </ul>
+  </div>
+</template>
 <style lang="scss" scoped>
 @import "../../style/main.scss";
 
@@ -172,6 +193,9 @@ ul.calendar {
   li {
     display: inline-block;
     width: 52px;
+    .nullBlock {
+      opacity: 0.35;
+    }
   }
   li.weekday {
     font-size: 14px;

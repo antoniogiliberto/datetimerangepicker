@@ -1,14 +1,22 @@
 const weekDayConfig = [
-  "Sunday",
   "Monday",
   "Tuesday",
   "Wednesday",
   "Thursday",
   "Friday",
-  "Saturday"
+  "Saturday",
+  "Sunday",
 ];
 
-const weekDayShortConfig = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekDayShortConfig = [
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun",
+];
 
 const monthConfig = [
   "January",
@@ -34,7 +42,6 @@ export const daysInMonth = (year, month) => {
 
 export const getWeekday = (date = "", isStringResult) => {
   if (!date) return isStringResult ? "" : -1;
-
   if (typeof date === "number" || typeof date === "string") {
     const weekday = new Date(date).getDay();
     return isStringResult ? weekDayConfig[weekday] : weekday;

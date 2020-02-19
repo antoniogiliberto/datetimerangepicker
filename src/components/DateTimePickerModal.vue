@@ -1,51 +1,3 @@
-<template>
-  <div class="dateTimeWrapper">
-    <div class="containerWrapper">
-      <div class="dateContainer">
-        <DatePicker
-          ref="datePickerRef"
-          :startDate="innerStartDate"
-          :endDate="innerEndDate"
-          @onChange="__onChange"
-          :singleDate="singleDate"
-        />
-      </div>
-      <div class="timeContainer">
-        <div class="startTime timeRow">
-          <span class="subTitle">From</span>
-          <div>
-            <span class="bigNumber">{{ innerStartDate.getDate() }}</span>
-            {{ getShortMonth(innerStartDate.getMonth()) }}
-            {{ innerStartDate.getFullYear() }}
-          </div>
-          <time-picker
-            :format="timeFormat"
-            v-bind:value="defaultStartTime"
-            @change="_onChangeTimeStart"
-          />
-        </div>
-        <div class="endTime timeRow" v-if="!singleDate">
-          <span class="subTitle">To</span>
-          <div>
-            <span class="bigNumber">{{ innerEndDate.getDate() }}</span>
-            {{ getShortMonth(innerEndDate.getMonth()) }}
-            {{ innerEndDate.getFullYear() }}
-          </div>
-          <time-picker
-            :format="timeFormat"
-            v-bind:value="defaultEndTime"
-            @change="_onChangeTimeEnd"
-          />
-        </div>
-      </div>
-    </div>
-    <div class="buttonWrap">
-      <a class="confirm" @click.stop.prevent="__onSubmit">submit</a>
-      <a class="cancel" @click.stop.prevent="__onCancel">cancel</a>
-    </div>
-  </div>
-</template>
-
 <script>
 import TimePicker from "./TimePicker/index.vue";
 import DatePicker from "./DatePicker/index.vue";
@@ -53,7 +5,7 @@ import utils from "../lib/date";
 import { getTimeObjectFromDate } from "../lib/time";
 
 const DEFAULT_START_TIME = {
-  hh: "00",
+  hh: "12",
   mm: "00",
   A: "AM"
 };
@@ -77,6 +29,10 @@ export default {
       }
     },
     __onChange: function(data) {
+        if(this.resetToDefaultTime) {
+          this.defaultStartTime = DEFAULT_START_TIME
+          this.defaultEndTime = DEFAULT_END_TIME
+        }
       return this.singleDate
         ? this._onChangeSingleDate(data)
         : this._onChangeMultiDate(data);
@@ -158,12 +114,14 @@ export default {
       type: String,
       default: "hh:mm:A"
     },
+    resetToDefaultTime: false,
     singleDate: {
       type: Boolean,
       default: false
     }
   },
-  data: function() {
+  data () {
+
     const today = new Date();
     const {
       startDate = today,
@@ -174,6 +132,8 @@ export default {
     const endTime = getTimeObjectFromDate(endDate, timeFormat);
 
     return {
+      menu2: false,
+      time: null,
       defaultStartTime: startTime || DEFAULT_START_TIME,
       defaultEndTime: endTime || DEFAULT_END_TIME,
       innerStartDate: startDate,
@@ -185,6 +145,88 @@ export default {
 };
 </script>
 
+<template>
+
+    <div class="dateTimeWrapper">
+      <div class="containerWrapper">
+        <div class="dateContainer">
+          <DatePicker
+              ref="datePickerRef"
+              :startDate="innerStartDate"
+              :endDate="innerEndDate"
+              @onChange="__onChange"
+              :singleDate="singleDate"
+          />
+        </div>
+        <div class="timeContainer">
+          <div class="startTime timeRow">
+            <span class="subTitle">From</span>
+            <div>
+              <span class="bigNumber">{{ innerStartDate.getDate() }}</span>
+              {{ getShortMonth(innerStartDate.getMonth()) }}
+              {{ innerStartDate.getFullYear() }}
+            </div>
+            <time-picker
+                :format="timeFormat"
+                v-bind:value="defaultStartTime"
+                @change="_onChangeTimeStart"
+            />
+          </div>
+          <div class="endTime timeRow" v-if="!singleDate">
+            <span class="subTitle">To</span>
+            <div>
+              <span class="bigNumber">{{ innerEndDate.getDate() }}</span>
+              {{ getShortMonth(innerEndDate.getMonth()) }}
+              {{ innerEndDate.getFullYear() }}
+            </div>
+            <time-picker
+                :format="timeFormat"
+                v-bind:value="defaultEndTime"
+                @change="_onChangeTimeEnd"
+            />
+          </div>
+          <div data-app>
+            <v-container fluid>
+              <v-row>
+                <v-menu
+                    ref="menu"
+                    v-model="menu2"
+                    :close-on-content-click="false"
+                    :nudge-right="40"
+                    :return-value.sync="time"
+                    transition="scale-transition"
+                    offset-y
+                    max-width="290px"
+                    min-width="290px"
+                >
+                  <template v-slot:activator="{ on }">
+                    <v-text-field
+                        v-model="time"
+                        label="Picker in menu"
+                        prepend-icon="access_time"
+                        readonly
+                        v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-time-picker
+                      v-if="menu2"
+                      v-model="time"
+                      full-width
+                      @click:minute="$refs.menu.save(time)"
+                  ></v-time-picker>
+                </v-menu>
+              </v-row>
+            </v-container>
+          </div>
+        </div>
+      </div>
+      <div class="buttonWrap">
+        <a class="confirm" @click.stop.prevent="__onSubmit">submit</a>
+        <a class="cancel" @click.stop.prevent="__onCancel">cancel</a>
+      </div>
+    </div>
+
+</template>
 <style lang="scss" scoped>
 @import "../style/main.scss";
 
@@ -201,7 +243,8 @@ export default {
       border-right: 1px solid $pale-grey-two;
     }
     .timeContainer {
-      padding: 0 30px;
+      padding: 0;
+      width: 300px;
       .timeRow {
         display: flex;
         flex-direction: column;
