@@ -139,7 +139,14 @@
                 <v-container fluid data-app>
                     <v-row no-gutters>
                         <v-spacer />
-                        <v-btn v-if="showClock" text icon small color="primary" ripple="false" @click="showClock = false">
+                        <v-btn v-if="showClock"
+                               text
+                               icon
+                               small
+                               color="primary"
+                               ripple="false"
+                               @click="showClock = false"
+                        >
                             <v-icon>mdi-close-box</v-icon>
                         </v-btn>
                     </v-row>
