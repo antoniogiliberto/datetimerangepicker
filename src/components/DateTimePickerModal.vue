@@ -139,8 +139,8 @@
                 <v-container fluid data-app>
                     <v-row no-gutters>
                         <v-spacer />
-                        <v-btn text icon color="primary" @click="showClock = false">
-                            <v-icon>fas fa-times</v-icon>
+                        <v-btn v-if="showClock" text icon small color="primary" ripple="false" @click="showClock = false">
+                            <v-icon>mdi-close-box</v-icon>
                         </v-btn>
                     </v-row>
                     <v-row v-if="!showClock" class="startTime timeRow">
