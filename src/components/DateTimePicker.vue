@@ -20,7 +20,7 @@
         },
         data() {
             return {
-                isOpen: this.closeModal,
+                isOpen: false,
                 shiftMarginLeft: 0,
                 shiftMarginHeight: 0
             }
@@ -42,11 +42,15 @@
                 type: Boolean,
                 default: false
             },
-            closeModal: {
+            toggleModal: {
                 type: Boolean,
-                default: false
             },
             onChange: Function
+        },
+        watch: {
+            toggleModal: () => {
+                this.isOpen = !this.isOpen
+            }
         },
         methods: {
             calculateShift: function () {
