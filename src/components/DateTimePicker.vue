@@ -14,7 +14,17 @@
 
     export default {
         name: "DateTimePicker",
-        components: {DateTimePickerModal, iconCalendar},
+        components: {
+            DateTimePickerModal,
+            iconCalendar
+        },
+        data() {
+            return {
+                isOpen: this.closeModal,
+                shiftMarginLeft: 0,
+                shiftMarginHeight: 0
+            }
+        },
         props: {
             dateRange: {
                 type: Object
@@ -29,6 +39,10 @@
                 default: "YYYY MMM DD HH:mm A"
             },
             singleDate: {
+                type: Boolean,
+                default: false
+            },
+            closeModal: {
                 type: Boolean,
                 default: false
             },
@@ -106,13 +120,6 @@
             endDate(){
                 return (typeof this.dateRange.to === 'object') ? this.dateRange.to : new Date(this.dateRange.to)
             },
-        },
-        data() {
-            return {
-                isOpen: false,
-                shiftMarginLeft: 0,
-                shiftMarginHeight: 0
-            }
         },
         // beforeMount() {
         //     let startDate = (typeof this.startDate === 'object') ? this.startDate : new Date(this.startDate)
