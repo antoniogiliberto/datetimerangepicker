@@ -2083,6 +2083,17 @@ module.exports = __webpack_require__("9e1e") ? Object.defineProperties : functio
 
 /***/ }),
 
+/***/ "1536":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_48ff2b50_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("5a03");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_48ff2b50_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_48ff2b50_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_48ff2b50_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "1633":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3449,6 +3460,148 @@ function normalizeComponent (
 
 /***/ }),
 
+/***/ "28a5":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isRegExp = __webpack_require__("aae3");
+var anObject = __webpack_require__("cb7c");
+var speciesConstructor = __webpack_require__("ebd6");
+var advanceStringIndex = __webpack_require__("0390");
+var toLength = __webpack_require__("9def");
+var callRegExpExec = __webpack_require__("5f1b");
+var regexpExec = __webpack_require__("520a");
+var fails = __webpack_require__("79e5");
+var $min = Math.min;
+var $push = [].push;
+var $SPLIT = 'split';
+var LENGTH = 'length';
+var LAST_INDEX = 'lastIndex';
+var MAX_UINT32 = 0xffffffff;
+
+// babel-minify transpiles RegExp('x', 'y') -> /x/y and it causes SyntaxError
+var SUPPORTS_Y = !fails(function () { RegExp(MAX_UINT32, 'y'); });
+
+// @@split logic
+__webpack_require__("214f")('split', 2, function (defined, SPLIT, $split, maybeCallNative) {
+  var internalSplit;
+  if (
+    'abbc'[$SPLIT](/(b)*/)[1] == 'c' ||
+    'test'[$SPLIT](/(?:)/, -1)[LENGTH] != 4 ||
+    'ab'[$SPLIT](/(?:ab)*/)[LENGTH] != 2 ||
+    '.'[$SPLIT](/(.?)(.?)/)[LENGTH] != 4 ||
+    '.'[$SPLIT](/()()/)[LENGTH] > 1 ||
+    ''[$SPLIT](/.?/)[LENGTH]
+  ) {
+    // based on es5-shim implementation, need to rework it
+    internalSplit = function (separator, limit) {
+      var string = String(this);
+      if (separator === undefined && limit === 0) return [];
+      // If `separator` is not a regex, use native split
+      if (!isRegExp(separator)) return $split.call(string, separator, limit);
+      var output = [];
+      var flags = (separator.ignoreCase ? 'i' : '') +
+                  (separator.multiline ? 'm' : '') +
+                  (separator.unicode ? 'u' : '') +
+                  (separator.sticky ? 'y' : '');
+      var lastLastIndex = 0;
+      var splitLimit = limit === undefined ? MAX_UINT32 : limit >>> 0;
+      // Make `global` and avoid `lastIndex` issues by working with a copy
+      var separatorCopy = new RegExp(separator.source, flags + 'g');
+      var match, lastIndex, lastLength;
+      while (match = regexpExec.call(separatorCopy, string)) {
+        lastIndex = separatorCopy[LAST_INDEX];
+        if (lastIndex > lastLastIndex) {
+          output.push(string.slice(lastLastIndex, match.index));
+          if (match[LENGTH] > 1 && match.index < string[LENGTH]) $push.apply(output, match.slice(1));
+          lastLength = match[0][LENGTH];
+          lastLastIndex = lastIndex;
+          if (output[LENGTH] >= splitLimit) break;
+        }
+        if (separatorCopy[LAST_INDEX] === match.index) separatorCopy[LAST_INDEX]++; // Avoid an infinite loop
+      }
+      if (lastLastIndex === string[LENGTH]) {
+        if (lastLength || !separatorCopy.test('')) output.push('');
+      } else output.push(string.slice(lastLastIndex));
+      return output[LENGTH] > splitLimit ? output.slice(0, splitLimit) : output;
+    };
+  // Chakra, V8
+  } else if ('0'[$SPLIT](undefined, 0)[LENGTH]) {
+    internalSplit = function (separator, limit) {
+      return separator === undefined && limit === 0 ? [] : $split.call(this, separator, limit);
+    };
+  } else {
+    internalSplit = $split;
+  }
+
+  return [
+    // `String.prototype.split` method
+    // https://tc39.github.io/ecma262/#sec-string.prototype.split
+    function split(separator, limit) {
+      var O = defined(this);
+      var splitter = separator == undefined ? undefined : separator[SPLIT];
+      return splitter !== undefined
+        ? splitter.call(separator, O, limit)
+        : internalSplit.call(String(O), separator, limit);
+    },
+    // `RegExp.prototype[@@split]` method
+    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@split
+    //
+    // NOTE: This cannot be properly polyfilled in engines that don't support
+    // the 'y' flag.
+    function (regexp, limit) {
+      var res = maybeCallNative(internalSplit, regexp, this, limit, internalSplit !== $split);
+      if (res.done) return res.value;
+
+      var rx = anObject(regexp);
+      var S = String(this);
+      var C = speciesConstructor(rx, RegExp);
+
+      var unicodeMatching = rx.unicode;
+      var flags = (rx.ignoreCase ? 'i' : '') +
+                  (rx.multiline ? 'm' : '') +
+                  (rx.unicode ? 'u' : '') +
+                  (SUPPORTS_Y ? 'y' : 'g');
+
+      // ^(? + rx + ) is needed, in combination with some S slicing, to
+      // simulate the 'y' flag.
+      var splitter = new C(SUPPORTS_Y ? rx : '^(?:' + rx.source + ')', flags);
+      var lim = limit === undefined ? MAX_UINT32 : limit >>> 0;
+      if (lim === 0) return [];
+      if (S.length === 0) return callRegExpExec(splitter, S) === null ? [S] : [];
+      var p = 0;
+      var q = 0;
+      var A = [];
+      while (q < S.length) {
+        splitter.lastIndex = SUPPORTS_Y ? q : 0;
+        var z = callRegExpExec(splitter, SUPPORTS_Y ? S : S.slice(q));
+        var e;
+        if (
+          z === null ||
+          (e = $min(toLength(splitter.lastIndex + (SUPPORTS_Y ? 0 : q)), S.length)) === p
+        ) {
+          q = advanceStringIndex(S, q, unicodeMatching);
+        } else {
+          A.push(S.slice(p, q));
+          if (A.length === lim) return A;
+          for (var i = 1; i <= z.length - 1; i++) {
+            A.push(z[i]);
+            if (A.length === lim) return A;
+          }
+          q = p = e;
+        }
+      }
+      A.push(S.slice(p));
+      return A;
+    }
+  ];
+});
+
+
+/***/ }),
+
 /***/ "2921":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4099,10 +4252,10 @@ module.exports = __webpack_require__("8e60") ? function (object, key, value) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SECOND; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return checkAcceptingType; });
 /* unused harmony export formatValue */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return initHours; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return initApm; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return initUnitWithInterval; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return getTimeObjectFromDate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return initHours; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return initApm; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return initUnitWithInterval; });
+/* unused harmony export getTimeObjectFromDate */
 /* harmony import */ var _home_salvatore_www_datetimepicker_node_modules_babel_runtime_corejs2_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("7618");
 /* harmony import */ var core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("ac6a");
 /* harmony import */ var core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_iterable__WEBPACK_IMPORTED_MODULE_1__);
@@ -5946,14 +6099,14 @@ $export($export.S + $export.F * !__webpack_require__("8e60"), 'Object', { define
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4cfb8cb2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DatePicker/index.vue?vue&type=template&id=3131d904&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fea19a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DatePicker/index.vue?vue&type=template&id=3131d904&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"datePicker_wrap"},[_c('div',{staticClass:"calendar-header"},[_c('span',{staticClass:"arrow icon-left",on:{"click":_vm.minusMonth}},[_c('arrow')],1),_c('h3',[_c('span',{staticClass:"currentMonth"},[_vm._v(_vm._s(_vm.currentMonthString))]),_c('span',{staticClass:"currentYear"},[_vm._v(_vm._s(_vm.currentYear))])]),_c('span',{staticClass:"arrow icon-right",on:{"click":_vm.addMonth}},[_c('arrow')],1)]),_c('calender',{attrs:{"month":_vm.currentMonth,"year":_vm.currentYear,"startDate":_vm.innerStartDate,"endDate":_vm.innerEndDate,"singleDate":_vm.singleDate},on:{"onChange":_vm._onChange}})],1)])}
 var staticRenderFns = []
 
 
 // CONCATENATED MODULE: ./src/components/DatePicker/index.vue?vue&type=template&id=3131d904&scoped=true&
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4cfb8cb2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Icons/Arrow.vue?vue&type=template&id=b6142fe2&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fea19a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Icons/Arrow.vue?vue&type=template&id=b6142fe2&scoped=true&
 var Arrowvue_type_template_id_b6142fe2_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('svg',{attrs:{"width":"7px","height":"13px","viewBox":"0 0 7 13"}},[_c('g',{attrs:{"id":"icon-left","stroke":"none","stroke-width":"1","fill":"currentColor","fill-rule":"evenodd"}},[_c('g',{attrs:{"id":"icon-left","transform":"translate(-462.000000, -412.000000)","fill":"currentColor"}},[_c('g',{attrs:{"id":"icon-left","transform":"translate(341.000000, 404.000000)"}},[_c('g',{attrs:{"id":"icon-left","transform":"translate(10.000000, 8.000000)"}},[_c('path',{attrs:{"d":"M113.351562,6.75 L117.917969,11.5078125 C118.063803,11.6536466 118.063803,11.7994784 117.917969,11.9453125 L117.097656,12.7929688 C116.951822,12.9388028 116.80599,12.9388028 116.660156,12.7929688 L111.082031,6.96875 C111.027343,6.91406223 111,6.84114629 111,6.75 C111,6.65885371 111.027343,6.58593777 111.082031,6.53125 L116.660156,0.70703125 C116.787761,0.579426445 116.933593,0.588540937 117.097656,0.734375 L117.917969,1.5546875 C118.063803,1.70052156 118.063803,1.84635344 117.917969,1.9921875 L113.351562,6.75 Z","id":"icon-left"}})])])])])])])}
 var Arrowvue_type_template_id_b6142fe2_scoped_true_staticRenderFns = []
 
@@ -7563,7 +7716,7 @@ $export($export.S + $export.F * !__webpack_require__("9e1e"), 'Object', { define
 
 /***/ }),
 
-/***/ "59ca":
+/***/ "5a03":
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -8264,7 +8417,7 @@ module.exports = function (key) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4cfb8cb2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TimePicker/index.vue?vue&type=template&id=6ec1fa4b&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fea19a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/TimePicker/index.vue?vue&type=template&id=6ec1fa4b&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{staticClass:"time-picker"},[_c('input',{directives:[{name:"model",rawName:"v-model",value:(_vm.displayTime),expression:"displayTime"}],staticClass:"display-time",attrs:{"id":_vm.id,"type":"text","readonly":""},domProps:{"value":(_vm.displayTime)},on:{"click":function($event){$event.stopPropagation();return _vm.toggleDropdown($event)},"input":function($event){if($event.target.composing){ return; }_vm.displayTime=$event.target.value}}}),(!_vm.hideClearButton)?_c('span',{directives:[{name:"show",rawName:"v-show",value:(!_vm.showDropdown && _vm.showClearBtn),expression:"!showDropdown && showClearBtn"}],staticClass:"clear-btn",on:{"click":function($event){$event.stopPropagation();return _vm.clearTime($event)}}},[_vm._v("×")]):_vm._e(),(_vm.showDropdown)?_c('div',{staticClass:"time-picker-overlay",on:{"click":function($event){$event.stopPropagation();return _vm.toggleDropdown($event)}}}):_vm._e(),_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.showDropdown),expression:"showDropdown"}],staticClass:"dropdown"},[_c('div',{staticClass:"select-list"},[_c('ul',{staticClass:"hours"},[_c('li',{staticClass:"hint",domProps:{"textContent":_vm._s(_vm.hourType)}}),_vm._l((_vm.hours),function(hr,key){return _c('li',{key:key + '-label',class:{ active: _vm.hour === hr },domProps:{"textContent":_vm._s(hr)},on:{"click":function($event){$event.stopPropagation();return _vm.selectHandler('hour', hr)}}})})],2),_c('ul',{staticClass:"minutes"},[_c('li',{staticClass:"hint",domProps:{"textContent":_vm._s(_vm.minuteType)}}),_vm._l((_vm.minutes),function(m,key){return _c('li',{class:{ active: _vm.minute === m },domProps:{"textContent":_vm._s(m)},on:{"click":function($event){$event.stopPropagation();return _vm.selectHandler('minute', m)}}})})],2),(_vm.secondType)?_c('ul',{staticClass:"seconds"},[_c('li',{staticClass:"hint",domProps:{"textContent":_vm._s(_vm.secondType)}}),_vm._l((_vm.seconds),function(s,key){return _c('li',{class:{ active: _vm.second === s },domProps:{"textContent":_vm._s(s)},on:{"click":function($event){$event.stopPropagation();return _vm.selectHandler('second', s)}}})})],2):_vm._e(),(_vm.apmType)?_c('ul',{staticClass:"apms"},[_c('li',{staticClass:"hint",domProps:{"textContent":_vm._s(_vm.apmType)}}),_vm._l((_vm.apms),function(a,key){return _c('li',{class:{ active: _vm.apm === a },domProps:{"textContent":_vm._s(a)},on:{"click":function($event){$event.stopPropagation();return _vm.selectHandler('apm', a)}}})})],2):_vm._e()])])])}
 var staticRenderFns = []
 
@@ -8496,15 +8649,15 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
       this.secondType = Object(time["c" /* checkAcceptingType */])(time["d" /* formatConfig */].SECOND_TOKENS, newFormat);
       this.apmType = Object(time["c" /* checkAcceptingType */])(time["d" /* formatConfig */].APM_TOKENS, newFormat); // start -=-=-=-= inint -=-=-=-=
 
-      this.hours = Object(time["g" /* initHours */])(this.hourType);
-      this.minutes = Object(toConsumableArray["a" /* default */])(Object(time["h" /* initUnitWithInterval */])(this.minuteType, minuteInterval));
+      this.hours = Object(time["f" /* initHours */])(this.hourType);
+      this.minutes = Object(toConsumableArray["a" /* default */])(Object(time["g" /* initUnitWithInterval */])(this.minuteType, minuteInterval));
 
       if (this.secondType) {
-        this.seconds = Object(toConsumableArray["a" /* default */])(Object(time["h" /* initUnitWithInterval */])(this.secondType, secondInterval));
+        this.seconds = Object(toConsumableArray["a" /* default */])(Object(time["g" /* initUnitWithInterval */])(this.secondType, secondInterval));
       }
 
       if (this.apmType) {
-        this.apms = Object(time["f" /* initApm */])(this.apmType);
+        this.apms = Object(time["e" /* initApm */])(this.apmType);
       } // end -=-=-=-= inint -=-=-=-=
 
 
@@ -12985,7 +13138,7 @@ module.exports = function (fn, that, length) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4cfb8cb2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DateTimePicker.vue?vue&type=template&id=4290a355&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fea19a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DateTimePicker.vue?vue&type=template&id=4290a355&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{ref:"wrapper",staticClass:"dateTimePickerWrapper"},[_c('a',{staticClass:"calendarTrigger",class:_vm.isOpen ? 'active' : '',on:{"click":_vm.openHandler}},[_c('icon-calendar',{staticClass:"iconCalendar"}),_c('input',{staticClass:"calendarInput",attrs:{"readonly":"readonly","type":"text"},domProps:{"value":_vm.dateString}})],1),(_vm.isOpen)?_c('date-time-picker-modal',{class:{ fadeInDown: _vm.isOpen },style:({
     marginLeft: ("-" + _vm.shiftMarginLeft + "px"),
     marginTop: ("-" + _vm.shiftMarginHeight + "px")
@@ -13028,7 +13181,7 @@ var defineProperty = __webpack_require__("bd86");
 // EXTERNAL MODULE: ./src/components/DateTimePickerModal.vue + 4 modules
 var DateTimePickerModal = __webpack_require__("f94e");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4cfb8cb2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Icons/Calendar.vue?vue&type=template&id=fc62f094&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fea19a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Icons/Calendar.vue?vue&type=template&id=fc62f094&scoped=true&
 var Calendarvue_type_template_id_fc62f094_scoped_true_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('svg',{attrs:{"width":"20px","height":"18px","viewBox":"0 0 24 25","version":"1.1"}},[_c('g',{attrs:{"id":"icon-calendar","stroke":"none","stroke-width":"1","fill":"currentColor","fill-rule":"evenodd"}},[_c('path',{attrs:{"d":"M20.73,22.52 L20.73,8.75 L3.27,8.75 L3.27,22.52 L20.73,22.52 Z M20.73,2.48 C21.4100034,2.48 21.9999975,2.7299975 22.5,3.23 C23.0000025,3.7300025 23.25,4.3199966 23.25,5 L23.25,22.52 C23.25,23.2000034 23.0000025,23.7799976 22.5,24.26 C21.9999975,24.7400024 21.4100034,24.98 20.73,24.98 L3.27,24.98 C2.5699965,24.98 1.97500245,24.7400024 1.485,24.26 C0.99499755,23.7799976 0.75,23.2000034 0.75,22.52 L0.75,5 C0.75,4.3199966 0.99499755,3.7300025 1.485,3.23 C1.97500245,2.7299975 2.5699965,2.48 3.27,2.48 L4.5,2.48 L4.5,0.02 L7.02,0.02 L7.02,2.48 L16.98,2.48 L16.98,0.02 L19.5,0.02 L19.5,2.48 L20.73,2.48 Z M18.27,11.27 L18.27,13.73 L15.75,13.73 L15.75,11.27 L18.27,11.27 Z M13.23,11.27 L13.23,13.73 L10.77,13.73 L10.77,11.27 L13.23,11.27 Z M8.25,11.27 L8.25,13.73 L5.73,13.73 L5.73,11.27 L8.25,11.27 Z","id":"icon-calendar","fill":"currentColor"}})])])])}
 var Calendarvue_type_template_id_fc62f094_scoped_true_staticRenderFns = []
 
@@ -20327,7 +20480,7 @@ module.exports = function (object, names) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4cfb8cb2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DatePicker/Calender.vue?vue&type=template&id=1dfffd44&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fea19a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DatePicker/Calender.vue?vue&type=template&id=1dfffd44&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('ul',{staticClass:"calendar"},[_vm._l((_vm.weekdays),function(weekday,key){return [_c('li',{key:'weekday' + key,staticClass:"weekday"},[_c('span',[_vm._v(_vm._s(weekday))])])]}),_vm._l((_vm.startWeekday),function(day,key){return (!_vm.ignoreStartWeekDay)?[_c('li',{key:'before' + key,staticClass:"day"},[_c('span',{staticClass:"nullBlock"},[_vm._v(_vm._s(_vm.substractDayPrevMonth(day)))])])]:_vm._e()}),_vm._l((_vm.daysCount),function(day,key){return [_c('li',{key:'day' + key,staticClass:"day"},[(!_vm.singleDate)?_c('span',{class:_vm.getDayStyle(day),on:{"click":function($event){return _vm.updateSelectingDay(day)}}},[_vm._v("\n          "+_vm._s(day)+"\n        ")]):_vm._e(),(_vm.singleDate)?_c('span',{class:_vm.getDayStyle(day),on:{"click":function($event){return _vm.updateSelectingSingleDay(day)}}},[_vm._v("\n          "+_vm._s(day)+"\n        ")]):_vm._e()])]}),_vm._l((_vm.endWeekday),function(day,key){return (!_vm.ignoreStartWeekDay)?[_c('li',{key:'after' + key,staticClass:"day"},[_c('span',{staticClass:"nullBlock"},[_vm._v(_vm._s(day))])])]:_vm._e()})],2)])}
 var staticRenderFns = []
 
@@ -20769,17 +20922,6 @@ module.exports = function (it) {
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
 
-
-/***/ }),
-
-/***/ "d4aa":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_7d3950f1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("59ca");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_7d3950f1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_7d3950f1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_dist_cjs_js_ref_8_oneOf_1_3_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DateTimePickerModal_vue_vue_type_style_index_0_id_7d3950f1_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -21781,6 +21923,22 @@ module.exports = function (original) {
 
 /***/ }),
 
+/***/ "ebd6":
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.3.20 SpeciesConstructor(O, defaultConstructor)
+var anObject = __webpack_require__("cb7c");
+var aFunction = __webpack_require__("d8e8");
+var SPECIES = __webpack_require__("2b4c")('species');
+module.exports = function (O, D) {
+  var C = anObject(O).constructor;
+  var S;
+  return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
+};
+
+
+/***/ }),
+
 /***/ "ebe4":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22546,14 +22704,15 @@ module.exports = __webpack_require__("584a").Symbol;
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4cfb8cb2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DateTimePickerModal.vue?vue&type=template&id=7d3950f1&scoped=true&
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"dateTimeWrapper"},[_c('div',{staticClass:"containerWrapper"},[_c('div',{staticClass:"dateContainer"},[_c('DatePicker',{ref:"datePickerRef",attrs:{"startDate":_vm.innerStartDate,"endDate":_vm.innerEndDate,"singleDate":_vm.singleDate},on:{"onChange":_vm.__onChange}})],1),_c('div',{staticClass:"timeContainer"},[_c('div',{staticClass:"startTime timeRow"},[_c('span',{staticClass:"subTitle"},[_vm._v("From")]),_c('div',[_c('span',{staticClass:"bigNumber"},[_vm._v(_vm._s(_vm.innerStartDate.getDate()))]),_vm._v("\n          "+_vm._s(_vm.getShortMonth(_vm.innerStartDate.getMonth()))+"\n          "+_vm._s(_vm.innerStartDate.getFullYear())+"\n        ")]),_c('time-picker',{attrs:{"format":_vm.timeFormat,"value":_vm.defaultStartTime},on:{"change":_vm._onChangeTimeStart}})],1),(!_vm.singleDate)?_c('div',{staticClass:"endTime timeRow"},[_c('span',{staticClass:"subTitle"},[_vm._v("To")]),_c('div',[_c('span',{staticClass:"bigNumber"},[_vm._v(_vm._s(_vm.innerEndDate.getDate()))]),_vm._v("\n          "+_vm._s(_vm.getShortMonth(_vm.innerEndDate.getMonth()))+"\n          "+_vm._s(_vm.innerEndDate.getFullYear())+"\n        ")]),_c('time-picker',{attrs:{"format":_vm.timeFormat,"value":_vm.defaultEndTime},on:{"change":_vm._onChangeTimeEnd}})],1):_vm._e(),_c('div',{attrs:{"data-app":""}},[_c('v-container',{attrs:{"fluid":""}},[_c('v-row',[_c('v-menu',{ref:"menu",attrs:{"close-on-content-click":false,"nudge-right":40,"return-value":_vm.time,"transition":"scale-transition","offset-y":"","max-width":"290px","min-width":"290px"},on:{"update:returnValue":function($event){_vm.time=$event},"update:return-value":function($event){_vm.time=$event}},scopedSlots:_vm._u([{key:"activator",fn:function(ref){
-var on = ref.on;
-return [_c('v-text-field',_vm._g({attrs:{"label":"Picker in menu","prepend-icon":"access_time","readonly":""},model:{value:(_vm.time),callback:function ($$v) {_vm.time=$$v},expression:"time"}},on))]}}]),model:{value:(_vm.menu2),callback:function ($$v) {_vm.menu2=$$v},expression:"menu2"}},[(_vm.menu2)?_c('v-time-picker',{attrs:{"full-width":""},on:{"click:minute":function($event){return _vm.$refs.menu.save(_vm.time)}},model:{value:(_vm.time),callback:function ($$v) {_vm.time=$$v},expression:"time"}}):_vm._e()],1)],1)],1)],1)])]),_c('div',{staticClass:"buttonWrap"},[_c('a',{staticClass:"confirm",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.__onSubmit($event)}}},[_vm._v("submit")]),_c('a',{staticClass:"cancel",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.__onCancel($event)}}},[_vm._v("cancel")])])])}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"68fea19a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DateTimePickerModal.vue?vue&type=template&id=48ff2b50&scoped=true&
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"dateTimeWrapper"},[_c('div',{staticClass:"containerWrapper"},[_c('div',{staticClass:"dateContainer"},[_c('DatePicker',{ref:"datePickerRef",attrs:{"startDate":_vm.innerStartDate,"endDate":_vm.innerEndDate,"singleDate":_vm.singleDate},on:{"onChange":_vm.__onChange}})],1),_c('div',{staticClass:"timeContainer"},[_c('div',{attrs:{"data-app":""}},[_c('v-container',{attrs:{"fluid":""}},[(!_vm.showClock)?_c('v-row',{staticClass:"startTime timeRow"},[_c('span',{staticClass:"subTitle"},[_vm._v("From")]),_c('div',[_c('span',{staticClass:"bigNumber"},[_vm._v(_vm._s(_vm.innerStartDate.getDate()))]),_vm._v("\n                            "+_vm._s(_vm.getShortMonth(_vm.innerStartDate.getMonth()))+"\n                            "+_vm._s(_vm.innerStartDate.getFullYear())+"\n                        ")]),_c('v-text-field',{attrs:{"dense":"","label":"Start time","outlined":"","readonly":""},on:{"click":function($event){_vm.showClock = true, _vm.clickedTimeField = 'Start'}},model:{value:(_vm.modelInnerStartTime),callback:function ($$v) {_vm.modelInnerStartTime=$$v},expression:"modelInnerStartTime"}})],1):_vm._e(),(!_vm.showClock)?_c('v-row',{staticClass:"endTime timeRow"},[_c('span',{staticClass:"subTitle"},[_vm._v("To")]),_c('div',[_c('span',{staticClass:"bigNumber"},[_vm._v(_vm._s(_vm.innerEndDate.getDate()))]),_vm._v("\n                            "+_vm._s(_vm.getShortMonth(_vm.innerEndDate.getMonth()))+"\n                            "+_vm._s(_vm.innerEndDate.getFullYear())+"\n                        ")]),_c('v-text-field',{attrs:{"dense":"","label":"End time","outlined":"","readonly":""},on:{"click":function($event){_vm.showClock = true, _vm.clickedTimeField = 'End'}},model:{value:(_vm.modelInnerEndTime),callback:function ($$v) {_vm.modelInnerEndTime=$$v},expression:"modelInnerEndTime"}})],1):_c('v-row',[_c('v-time-picker',{attrs:{"ampm-in-title":""},on:{"click:minute":function($event){_vm.showClock = false}},model:{value:(_vm.modelTimepicker),callback:function ($$v) {_vm.modelTimepicker=$$v},expression:"modelTimepicker"}})],1)],1)],1)])]),_c('div',{staticClass:"buttonWrap"},[_c('a',{staticClass:"confirm",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.__onSubmit($event)}}},[_vm._v("submit")]),_c('a',{staticClass:"cancel",on:{"click":function($event){$event.stopPropagation();$event.preventDefault();return _vm.__onCancel($event)}}},[_vm._v("cancel")])])])}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/DateTimePickerModal.vue?vue&type=template&id=7d3950f1&scoped=true&
+// CONCATENATED MODULE: ./src/components/DateTimePickerModal.vue?vue&type=template&id=48ff2b50&scoped=true&
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.split.js
+var es6_regexp_split = __webpack_require__("28a5");
 
 // EXTERNAL MODULE: ./src/components/TimePicker/index.vue + 4 modules
 var TimePicker = __webpack_require__("6174");
@@ -22572,21 +22731,49 @@ var time = __webpack_require__("3657");
 
 
 
-var DEFAULT_START_TIME = {
-  hh: "12",
-  mm: "00",
-  A: "AM"
-};
-var DEFAULT_END_TIME = {
-  hh: "12",
-  mm: "59",
-  A: "PM"
-};
+
+var DEFAULT_START_TIME = '00:00';
+var DEFAULT_END_TIME = '23:59';
 /* harmony default export */ var DateTimePickerModalvue_type_script_lang_js_ = ({
-  name: "DateTimePickerModal",
+  name: 'DateTimePickerModal',
   components: {
     DatePicker: DatePicker["a" /* default */],
     TimePicker: TimePicker["a" /* default */]
+  },
+  data: function data() {
+    var today = new Date();
+    var _this$startDate = this.startDate,
+        startDate = _this$startDate === void 0 ? today : _this$startDate,
+        _this$endDate = this.endDate,
+        endDate = _this$endDate === void 0 ? date["a" /* default */].getDayAfter(today, 2) : _this$endDate;
+    return {
+      showClock: false,
+      clickedTimeField: null,
+      modelTimepicker: null,
+      modelInnerStartTime: DEFAULT_START_TIME,
+      modelInnerEndTime: DEFAULT_END_TIME,
+      innerStartDate: startDate,
+      innerEndDate: endDate
+    };
+  },
+  props: {
+    submitHandler: Function,
+    startDate: Date,
+    endDate: Date,
+    timeFormat: {
+      type: String,
+      default: 'hh:mm:A'
+    },
+    resetToDefaultTime: false,
+    singleDate: {
+      type: Boolean,
+      default: false
+    }
+  },
+  watch: {
+    modelTimepicker: function modelTimepicker(time) {
+      this["modelInner".concat(this.clickedTimeField, "Time")] = time;
+    }
   },
   methods: {
     callEvent: function callEvent(eventName, data) {
@@ -22600,8 +22787,8 @@ var DEFAULT_END_TIME = {
     },
     __onChange: function __onChange(data) {
       if (this.resetToDefaultTime) {
-        this.defaultStartTime = DEFAULT_START_TIME;
-        this.defaultEndTime = DEFAULT_END_TIME;
+        this.modelInnerStartTime = DEFAULT_START_TIME;
+        this.modelInnerEndTime = DEFAULT_END_TIME;
       }
 
       return this.singleDate ? this._onChangeSingleDate(data) : this._onChangeMultiDate(data);
@@ -22613,40 +22800,44 @@ var DEFAULT_END_TIME = {
       return date["a" /* default */].monthShortConfig[monthIndex];
     },
     __onCancel: function __onCancel() {
-      return this.callEvent("cancelHandler");
+      return this.callEvent('cancelHandler');
     },
     _submitSingleHandler: function _submitSingleHandler() {
       var startTime = this.innerStartTime,
           endTime = this.innerEndTime;
       var startDate = this.$refs.datePickerRef.innerStartDate;
-      var startDateString = date["a" /* default */].format(startDate, "yy-mm-dd");
-      var startTimeString = "".concat(startTime.HH || "00", ":").concat(startTime.mm || "00");
+      var startDateString = date["a" /* default */].format(startDate, 'yy-mm-dd');
+      var startTimeString = "".concat(startTime.HH || '00', ":").concat(startTime.mm || '00');
       var startDateObject = new Date("".concat(startDateString, "T").concat(startTimeString));
       var returnData = {
         startDate: startDateObject,
         startTime: startTime
       };
-      return this.callEvent("submitHandler", returnData);
+      return this.callEvent('submitHandler', returnData);
     },
     _submitMultiHandler: function _submitMultiHandler() {
-      var startTime = this.innerStartTime,
-          endTime = this.innerEndTime;
       var _this$$refs$datePicke = this.$refs.datePickerRef,
           startDate = _this$$refs$datePicke.innerStartDate,
           endDate = _this$$refs$datePicke.innerEndDate;
-      var startDateString = date["a" /* default */].format(startDate, "yy-mm-dd");
-      var endDateString = date["a" /* default */].format(endDate, "yy-mm-dd");
-      var startTimeString = "".concat(startTime.HH, ":").concat(startTime.mm);
-      var endTimeString = "".concat(endTime.HH, ":").concat(endTime.mm);
-      var startDateObject = new Date("".concat(startDateString, "T").concat(startTimeString));
-      var endDateObject = new Date("".concat(endDateString, "T").concat(endTimeString));
+      var startDateString = date["a" /* default */].format(startDate, 'yy-mm-dd');
+      var endDateString = date["a" /* default */].format(endDate, 'yy-mm-dd');
+      var startDateObject = new Date("".concat(startDateString, "T").concat(this.modelInnerStartTime));
+      var endDateObject = new Date("".concat(endDateString, "T").concat(this.modelInnerEndTime));
+      var s = this.modelInnerStartTime.split(':');
+      var e = this.modelInnerEndTime.split(':');
       var returnData = {
         startDate: startDateObject,
         endDate: endDateObject,
-        startTime: startTime,
-        endTime: endTime
+        startTime: {
+          HH: s[0],
+          mm: s[1]
+        },
+        endTime: {
+          HH: e[0],
+          mm: e[1]
+        }
       };
-      return this.callEvent("submitHandler", returnData);
+      return this.callEvent('submitHandler', returnData);
     },
     _onChangeMultiDate: function _onChangeMultiDate(data) {
       var startDate = data.startDate,
@@ -22657,57 +22848,13 @@ var DEFAULT_END_TIME = {
     _onChangeSingleDate: function _onChangeSingleDate(data) {
       var startDate = data.startDate;
       this.innerStartDate = startDate;
-    },
-    _onChangeTimeStart: function _onChangeTimeStart(val) {
-      return this._onChangeTime("innerStartTime", val);
-    },
-    _onChangeTimeEnd: function _onChangeTimeEnd(val) {
-      return this._onChangeTime("innerEndTime", val);
-    },
-    _onChangeTime: function _onChangeTime(field, val) {
-      this[field] = val.data;
     }
-  },
-  props: {
-    submitHandler: Function,
-    startDate: Date,
-    endDate: Date,
-    timeFormat: {
-      type: String,
-      default: "hh:mm:A"
-    },
-    resetToDefaultTime: false,
-    singleDate: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data: function data() {
-    var today = new Date();
-    var _this$startDate = this.startDate,
-        startDate = _this$startDate === void 0 ? today : _this$startDate,
-        _this$timeFormat = this.timeFormat,
-        timeFormat = _this$timeFormat === void 0 ? "hh:mm:A" : _this$timeFormat,
-        _this$endDate = this.endDate,
-        endDate = _this$endDate === void 0 ? date["a" /* default */].getDayAfter(today, 2) : _this$endDate;
-    var startTime = Object(time["e" /* getTimeObjectFromDate */])(startDate, timeFormat);
-    var endTime = Object(time["e" /* getTimeObjectFromDate */])(endDate, timeFormat);
-    return {
-      menu2: false,
-      time: null,
-      defaultStartTime: startTime || DEFAULT_START_TIME,
-      defaultEndTime: endTime || DEFAULT_END_TIME,
-      innerStartDate: startDate,
-      innerEndDate: endDate,
-      innerStartTime: startTime,
-      innerEndTime: endTime
-    };
   }
 });
 // CONCATENATED MODULE: ./src/components/DateTimePickerModal.vue?vue&type=script&lang=js&
  /* harmony default export */ var components_DateTimePickerModalvue_type_script_lang_js_ = (DateTimePickerModalvue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/DateTimePickerModal.vue?vue&type=style&index=0&id=7d3950f1&lang=scss&scoped=true&
-var DateTimePickerModalvue_type_style_index_0_id_7d3950f1_lang_scss_scoped_true_ = __webpack_require__("d4aa");
+// EXTERNAL MODULE: ./src/components/DateTimePickerModal.vue?vue&type=style&index=0&id=48ff2b50&lang=scss&scoped=true&
+var DateTimePickerModalvue_type_style_index_0_id_48ff2b50_lang_scss_scoped_true_ = __webpack_require__("1536");
 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
@@ -22727,7 +22874,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "7d3950f1",
+  "48ff2b50",
   null
   
 )
