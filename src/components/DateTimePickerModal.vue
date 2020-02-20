@@ -207,7 +207,8 @@
                         </v-row>
                         <v-row v-else>
                             <v-time-picker
-                                ampm-in-title
+                                no-title
+                                format="24hr"
                                 v-model="modelTimepicker"
                                 @click:minute="showClock = false"
                             ></v-time-picker>
