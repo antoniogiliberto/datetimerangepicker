@@ -42,15 +42,16 @@
                 type: Boolean,
                 default: false
             },
-            toggleModal: {
+            clickOutside: {
                 type: Boolean,
             },
             onChange: Function
         },
         watch: {
-            toggleModal: {
+            clickOutside: {
                 handler() {
-                    this.isOpen = !this.isOpen
+                    this.isOpen = false
+                    this.$emit("isOpen", this.isOpen)
                 }
             }
         },
