@@ -146,7 +146,7 @@
                                ripple="false"
                                @click="showClock = false"
                         >
-                            <v-icon color="primary">far fa-window-close</v-icon>
+                            <v-icon color="primary">fas fa-times</v-icon>
                         </v-btn>
                     </v-row>
                     <v-row v-if="!showClock" class="startTime timeRow">
