@@ -38,11 +38,8 @@
                     return this.onChange({...returnData});
                 }
             },
-            substractDayPrevMonth(days) {
-                const lastDayPrevMonth = new Date(new Date(this.year, this.month, 0).getTime()).getDate();
-                return lastDayPrevMonth - days;
-            },
             updateSelectingSingleDay: function (day) {
+
                 if (!day) return;
 
                 const {year, month, innerStartDate, innerEndDate} = this;
@@ -56,24 +53,33 @@
                     startDate: this.innerStartDate,
                 });
             },
+            substractDayPrevMonth(days) {
+                const lastDayPrevMonth = new Date(new Date(this.year, this.month, 0).getTime()).getDate();
+                return lastDayPrevMonth - days;
+            },
+            getSelectedDayDateObject(day, whichMonth = 'current'){
+                let y = null
+                let m = null
+
+                switch(whichMonth){
+                    case 'prev':
+                        y = this.month === 0 ? this.year - 1 : this.year
+                        m = this.month === 0 ? 12 : this.month
+                        return new Date(`${y}-${m}-${this.substractDayPrevMonth(day)}`);
+                    case 'current':
+                        return new Date(`${this.year}-${this.month + 1}-${day}`);
+                    case 'next':
+                        y = this.month === 11 ? this.year + 1 : this.year
+                        m = this.month === 11 ? 1 : this.month + 2
+                        return new Date(`${y}-${m}-${day}`);
+                }
+            },
             updateSelectingDay: function (day, whichMonth = 'current') {
-                if (!day) return;
-
-                const {
-                    year,
-                    month,
-                    innerStartDate,
-                    innerEndDate,
-                    isSelectingStartDay,
-                } = this;
-
-                const currentDay = new Date(`${year}-${month + 1}-${day}`);
+                const { innerStartDate, isSelectingStartDay } = this;
+                const currentDay = this.getSelectedDayDateObject(day, whichMonth);
 
                 // reset
-                if (
-                    isSelectingStartDay ||
-                    (!isSelectingStartDay && currentDay < innerStartDate)
-                ) {
+                if (isSelectingStartDay || (!isSelectingStartDay && currentDay < innerStartDate)) {
                     this.innerStartDate = currentDay;
                     this.isSelectingStartDay = false;
                 } else {
@@ -90,14 +96,13 @@
                 });
             },
 
-            getDayStyle: function (day) {
+            getDayStyle: function (day, whichMonth = 'current') {
                 const {innerStartDate, innerEndDate, year, month} = this;
-                const currentDay = new Date(`${year}-${month + 1}-${day}`);
+                const currentDay = this.getSelectedDayDateObject(day, whichMonth);
 
                 if (utils.isSameDay(currentDay, innerStartDate)) return 'innerStartDate';
                 if (utils.isSameDay(currentDay, innerEndDate)) return 'innerEndDate';
-                if (isBetweenDays(innerStartDate, innerEndDate, currentDay))
-                    return 'between';
+                if (isBetweenDays(innerStartDate, innerEndDate, currentDay)) return 'between';
                 if (isToday(currentDay)) return 'today';
 
                 return '';
@@ -147,9 +152,10 @@
             <template v-if="!ignoreStartWeekDay" v-for="(day, key) in startWeekday">
                 <li class="day" :key="'before' + key">
                     <span
+                        v-if="!singleDate"
                         class="nullBlock"
                         :class="getDayStyle(day,'prev')"
-                        @click="updateSelectingSingleDay(day,'prev')"
+                        @click="updateSelectingDay(day,'prev')"
                     >{{substractDayPrevMonth(day)}}
                     </span>
                 </li>
@@ -173,9 +179,10 @@
             <template v-if="!ignoreStartWeekDay" v-for="(day, key) in endWeekday">
                 <li class="day" :key="'after' + key">
                     <span
+                        v-if="!singleDate"
                         class="nullBlock"
                         :class="getDayStyle(day,'next')"
-                        @click="updateSelectingSingleDay(day,'next')"
+                        @click="updateSelectingDay(day,'next')"
                     >{{day}}
                     </span>
                 </li>

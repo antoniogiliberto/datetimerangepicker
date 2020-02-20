@@ -20,12 +20,15 @@
                 endDate = utils.getDayAfter(today, 2),
             } = this;
 
+            const startTime = getTimeObjectFromDate(startDate, 'HH:mm');
+            const endTime = getTimeObjectFromDate(endDate, 'HH:mm');
+
             return {
                 showClock: false,
                 clickedTimeField: null,
                 modelTimepicker: null,
-                modelInnerStartTime: DEFAULT_START_TIME,
-                modelInnerEndTime: DEFAULT_END_TIME,
+                modelInnerStartTime: `${startTime.HH}:${startTime.mm}` || DEFAULT_START_TIME,
+                modelInnerEndTime: `${endTime.HH}:${endTime.mm}` || DEFAULT_END_TIME,
                 innerStartDate: startDate,
                 innerEndDate: endDate,
             };
@@ -56,10 +59,11 @@
                 }
             },
             __onChange: function (data) {
-                if (this.resetToDefaultTime) {
-                    this.modelInnerStartTime = DEFAULT_START_TIME;
-                    this.modelInnerEndTime = DEFAULT_END_TIME;
-                }
+                // if (this.resetToDefaultTime) {
+                //     this.modelInnerStartTime = DEFAULT_START_TIME;
+                //     this.modelInnerEndTime = DEFAULT_END_TIME;
+                // }
+                console.log('DATA', data)
                 return this.singleDate
                     ? this._onChangeSingleDate(data)
                     : this._onChangeMultiDate(data);
@@ -142,7 +146,6 @@
                         <v-btn v-if="showClock"
                                text
                                icon
-                               x-small
                                ripple
                                @click="showClock = false"
                         >
