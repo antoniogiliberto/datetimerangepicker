@@ -128,11 +128,11 @@
         <div class="containerWrapper">
             <div class="dateContainer">
                 <DatePicker
-                        ref="datePickerRef"
-                        :startDate="innerStartDate"
-                        :endDate="innerEndDate"
-                        @onChange="__onChange"
-                        :singleDate="singleDate"
+                    ref="datePickerRef"
+                    :startDate="innerStartDate"
+                    :endDate="innerEndDate"
+                    @onChange="__onChange"
+                    :singleDate="singleDate"
                 />
             </div>
             <div class="timeContainer">
@@ -143,11 +143,10 @@
                                text
                                icon
                                small
-                               color="primary"
                                ripple="false"
                                @click="showClock = false"
                         >
-                            <v-icon>mdi-close-box</v-icon>
+                            <v-icon color="primary">far fa-window-close</v-icon>
                         </v-btn>
                     </v-row>
                     <v-row v-if="!showClock" class="startTime timeRow">
@@ -164,7 +163,7 @@
                             outlined
                             readonly
                             @click="showClock = true, clickedTimeField = 'Start'"
-                        ></v-text-field>
+                        />
                     </v-row>
                     <v-row v-if="!showClock" class="endTime timeRow">
                         <span class="subTitle">To</span>
@@ -180,7 +179,7 @@
                             outlined
                             readonly
                             @click="showClock = true, clickedTimeField = 'End'"
-                        ></v-text-field>
+                        />
                     </v-row>
                     <v-row v-else>
                         <v-time-picker
@@ -189,7 +188,7 @@
                             :allowed-minutes="allowedStep"
                             v-model="modelTimepicker"
                             @click:minute="showClock = false"
-                        ></v-time-picker>
+                        />
                     </v-row>
                 </v-container>
             </div>
