@@ -5,7 +5,7 @@
     import {getTimeObjectFromDate} from '../lib/time';
 
     const DEFAULT_START_TIME = '00:00';
-    const DEFAULT_END_TIME = '23:59';
+    const DEFAULT_END_TIME = '00:00';
 
     export default {
         name: 'DateTimePickerModal',
@@ -50,6 +50,7 @@
             },
         },
         methods: {
+            allowedStep: m => m % 5 === 0,
             callEvent: function (eventName, data) {
                 if (this.$listeners[eventName]) {
                     return this.$emit(eventName, data);
@@ -209,6 +210,7 @@
                             <v-time-picker
                                 no-title
                                 format="24hr"
+                                :allowed-minutes="allowedStep"
                                 v-model="modelTimepicker"
                                 @click:minute="showClock = false"
                             ></v-time-picker>
