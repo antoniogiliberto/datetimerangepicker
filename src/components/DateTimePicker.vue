@@ -19,6 +19,11 @@
             dateRange: {
                 type: Object
             },
+            clockAllowedMinutes: {
+                type: Number,
+                default: 1,
+                required: false
+            },
             format: {
                 type: String,
                 default: "YYYY MMM DD HH:mm A"
@@ -140,10 +145,11 @@
             :endDate="endDate"
             :startDate="startDate"
             :style="{
-        marginLeft: `-${shiftMarginLeft}px`,
-        marginTop: `-${shiftMarginHeight}px`
-      }"
+                marginLeft: `-${shiftMarginLeft}px`,
+                marginTop: `-${shiftMarginHeight}px`
+            }"
             :format="format"
+            :clock-allowed-minutes="clockAllowedMinutes"
             @cancelHandler="isOpen = false"
             @submitHandler="submitHandler"
             v-if="isOpen"

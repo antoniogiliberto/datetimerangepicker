@@ -18,6 +18,7 @@
             const {
                 startDate = today,
                 endDate = utils.getDayAfter(today, 2),
+                clockAllowedMinutes
             } = this;
 
             const startTime = getTimeObjectFromDate(startDate, 'HH:mm');
@@ -31,12 +32,18 @@
                 modelInnerEndTime: `${endTime.HH}:${endTime.mm}` || DEFAULT_END_TIME,
                 innerStartDate: startDate,
                 innerEndDate: endDate,
+                allowedClockMinutes: clockAllowedMinutes
             };
         },
         props: {
             submitHandler: Function,
             startDate: Date,
             endDate: Date,
+            clockAllowedMinutes: {
+                type: Number,
+                default: 1,
+                required: false
+            },
             resetToDefaultTime: false,
             singleDate: {
                 type: Boolean,
@@ -49,7 +56,9 @@
             },
         },
         methods: {
-            allowedStep: m => m % 5 === 0,
+            allowedStep: function(m) {
+                return m % this.clockAllowedMinutes === 0
+            },
             callEvent: function (eventName, data) {
                 if (this.$listeners[eventName]) {
                     return this.$emit(eventName, data);
@@ -59,11 +68,10 @@
                 }
             },
             __onChange: function (data) {
-                // if (this.resetToDefaultTime) {
-                //     this.modelInnerStartTime = DEFAULT_START_TIME;
-                //     this.modelInnerEndTime = DEFAULT_END_TIME;
-                // }
-                console.log('DATA', data)
+                if (this.resetToDefaultTime) {
+                    this.modelInnerStartTime = DEFAULT_START_TIME;
+                    this.modelInnerEndTime = DEFAULT_END_TIME;
+                }
                 return this.singleDate
                     ? this._onChangeSingleDate(data)
                     : this._onChangeMultiDate(data);
