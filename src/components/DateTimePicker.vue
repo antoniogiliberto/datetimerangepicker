@@ -48,8 +48,10 @@
             onChange: Function
         },
         watch: {
-            toggleModal: () => {
-                this.isOpen = !this.isOpen
+            toggleModal: {
+                handler() {
+                    this.isOpen = !this.isOpen
+                }
             }
         },
         methods: {
