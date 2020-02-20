@@ -34,10 +34,6 @@
             submitHandler: Function,
             startDate: Date,
             endDate: Date,
-            timeFormat: {
-                type: String,
-                default: 'hh:mm:A',
-            },
             resetToDefaultTime: false,
             singleDate: {
                 type: Boolean,
@@ -140,115 +136,55 @@
                 />
             </div>
             <div class="timeContainer">
-
-
-                <!--
-                          <div class="startTime timeRow">
-                            <span class="subTitle">From</span>
-                            <div>
-                              <span class="bigNumber">{{ innerStartDate.getDate() }}</span>
-                              {{ getShortMonth(innerStartDate.getMonth()) }}
-                              {{ innerStartDate.getFullYear() }}
-                            </div>
-                            <time-picker
-                                :format="timeFormat"
-                                v-bind:value="defaultStartTime"
-                                @change="_onChangeTimeStart"
-                            />
-                          </div>
-                          <div class="endTime timeRow" v-if="!singleDate">
-                            <span class="subTitle">To</span>
-                            <div>
-                              <span class="bigNumber">{{ innerEndDate.getDate() }}</span>
-                              {{ getShortMonth(innerEndDate.getMonth()) }}
-                              {{ innerEndDate.getFullYear() }}
-                            </div>
-                            <time-picker
-                                :format="timeFormat"
-                                v-bind:value="defaultEndTime"
-                                @change="_onChangeTimeEnd"
-                            />
-                          </div>
-                -->
-
-
-                <div data-app>
-                    <v-container fluid>
-                        <v-row v-if="!showClock" class="startTime timeRow">
-                            <span class="subTitle">From</span>
-                            <div>
-                                <span class="bigNumber">{{ innerStartDate.getDate() }}</span>
-                                {{ getShortMonth(innerStartDate.getMonth()) }}
-                                {{ innerStartDate.getFullYear() }}
-                            </div>
-                            <v-text-field
-                                v-model="modelInnerStartTime"
-                                dense
-                                label="Start time"
-                                outlined
-                                readonly
-                                @click="showClock = true, clickedTimeField = 'Start'"
-                            ></v-text-field>
-                        </v-row>
-                        <v-row v-if="!showClock" class="endTime timeRow">
-                            <span class="subTitle">To</span>
-                            <div>
-                                <span class="bigNumber">{{ innerEndDate.getDate() }}</span>
-                                {{ getShortMonth(innerEndDate.getMonth()) }}
-                                {{ innerEndDate.getFullYear() }}
-                            </div>
-                            <v-text-field
-                                v-model="modelInnerEndTime"
-                                dense
-                                label="End time"
-                                outlined
-                                readonly
-                                @click="showClock = true, clickedTimeField = 'End'"
-                            ></v-text-field>
-                        </v-row>
-                        <v-row v-else>
-                            <v-time-picker
-                                no-title
-                                format="24hr"
-                                :allowed-minutes="allowedStep"
-                                v-model="modelTimepicker"
-                                @click:minute="showClock = false"
-                            ></v-time-picker>
-                        </v-row>
-
-
-                        <!--
-                                        <v-menu
-                                            ref="menu"
-                                            v-model="menu2"
-                                            :close-on-content-click="false"
-                                            :nudge-right="40"
-                                            :return-value.sync="time"
-                                            transition="scale-transition"
-                                            offset-y
-                                            max-width="290px"
-                                            min-width="290px"
-                                        >
-                                          <template v-slot:activator="{ on }">
-                                            <v-text-field
-                                                v-model="time"
-                                                label="Picker in menu"
-                                                prepend-icon="access_time"
-                                                readonly
-                                                v-on="on"
-                                            ></v-text-field>
-                                          </template>
-
-                                          <v-time-picker
-                                              v-if="menu2"
-                                              v-model="time"
-                                              full-width
-                                              @click:minute="$refs.menu.save(time)"
-                                          ></v-time-picker>
-                                        </v-menu>
-                        -->
-                    </v-container>
-                </div>
+                <v-container fluid data-app>
+                    <v-row no-gutters>
+                        <v-spacer />
+                        <v-btn text icon color="primary" @click="showClock = false">
+                            <v-icon>fas fa-times</v-icon>
+                        </v-btn>
+                    </v-row>
+                    <v-row v-if="!showClock" class="startTime timeRow">
+                        <span class="subTitle">From</span>
+                        <div>
+                            <span class="bigNumber">{{ innerStartDate.getDate() }}</span>
+                            {{ getShortMonth(innerStartDate.getMonth()) }}
+                            {{ innerStartDate.getFullYear() }}
+                        </div>
+                        <v-text-field
+                            v-model="modelInnerStartTime"
+                            dense
+                            label="Start time"
+                            outlined
+                            readonly
+                            @click="showClock = true, clickedTimeField = 'Start'"
+                        ></v-text-field>
+                    </v-row>
+                    <v-row v-if="!showClock" class="endTime timeRow">
+                        <span class="subTitle">To</span>
+                        <div>
+                            <span class="bigNumber">{{ innerEndDate.getDate() }}</span>
+                            {{ getShortMonth(innerEndDate.getMonth()) }}
+                            {{ innerEndDate.getFullYear() }}
+                        </div>
+                        <v-text-field
+                            v-model="modelInnerEndTime"
+                            dense
+                            label="End time"
+                            outlined
+                            readonly
+                            @click="showClock = true, clickedTimeField = 'End'"
+                        ></v-text-field>
+                    </v-row>
+                    <v-row v-else>
+                        <v-time-picker
+                            no-title
+                            format="24hr"
+                            :allowed-minutes="allowedStep"
+                            v-model="modelTimepicker"
+                            @click:minute="showClock = false"
+                        ></v-time-picker>
+                    </v-row>
+                </v-container>
             </div>
         </div>
         <div class="buttonWrap">
