@@ -142,8 +142,8 @@
                         <v-btn v-if="showClock"
                                text
                                icon
-                               small
-                               ripple="false"
+                               x-small
+                               ripple
                                @click="showClock = false"
                         >
                             <v-icon color="primary">fas fa-times</v-icon>
