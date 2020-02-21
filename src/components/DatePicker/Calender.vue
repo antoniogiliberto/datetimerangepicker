@@ -27,8 +27,14 @@
                 type: Boolean,
                 default: false,
             },
-            min:  Date,
-            max: Date,
+            min: {
+                type: Date,
+                default: new Date('January 1, 1970')
+            },
+            max: {
+                type: Date,
+                default: new Date('January 1, 210')
+            },
         },
         methods: {
             callOnChange: function (returnData) {
