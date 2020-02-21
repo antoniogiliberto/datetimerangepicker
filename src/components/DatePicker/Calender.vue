@@ -27,14 +27,8 @@
                 type: Boolean,
                 default: false,
             },
-            min: {
-                type: Date,
-                required: false,
-            },
-            max: {
-                type: Date,
-                required: false,
-            },
+            min:  Date,
+            max: Date,
         },
         methods: {
             callOnChange: function (returnData) {

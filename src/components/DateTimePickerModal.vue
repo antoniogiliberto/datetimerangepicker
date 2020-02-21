@@ -43,14 +43,8 @@
                 default: 1,
                 required: false
             },
-            min: {
-                type: Date,
-                required: false
-            },
-            max: {
-                type: Date,
-                required: false
-            },
+            min:  Date,
+            max: Date,
             defaultStartTime: {
                 type: String,
                 default: '00:00',
