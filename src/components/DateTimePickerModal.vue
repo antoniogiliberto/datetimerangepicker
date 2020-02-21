@@ -5,9 +5,6 @@
     import {getTimeObjectFromDate} from '../lib/time';
     import Times from "./Icons/Times";
 
-    const DEFAULT_START_TIME = '00:00';
-    const DEFAULT_END_TIME = '00:00';
-
     export default {
         name: 'DateTimePickerModal',
         components: {
@@ -20,7 +17,8 @@
             const {
                 startDate = today,
                 endDate = utils.getDayAfter(today, 2),
-                clockAllowedMinutes
+                defaultStartTime,
+                defaultEndTime
             } = this;
 
             const startTime = getTimeObjectFromDate(startDate, 'HH:mm');
@@ -30,11 +28,10 @@
                 showClock: false,
                 clickedTimeField: null,
                 modelTimepicker: null,
-                modelInnerStartTime: `${startTime.HH}:${startTime.mm}` || DEFAULT_START_TIME,
-                modelInnerEndTime: `${endTime.HH}:${endTime.mm}` || DEFAULT_END_TIME,
+                modelInnerStartTime: `${startTime.HH}:${startTime.mm}` || defaultStartTime,
+                modelInnerEndTime: `${endTime.HH}:${endTime.mm}` || defaultEndTime,
                 innerStartDate: startDate,
                 innerEndDate: endDate,
-                allowedClockMinutes: clockAllowedMinutes
             };
         },
         props: {
@@ -46,7 +43,28 @@
                 default: 1,
                 required: false
             },
-            resetToDefaultTime: false,
+            min: {
+                type: Date,
+                required: false
+            },
+            max: {
+                type: Date,
+                required: false
+            },
+            defaultStartTime: {
+                type: String,
+                default: '00:00',
+                required: false
+            },
+            defaultEndTime: {
+                type: String,
+                default: '23:59',
+                required: false
+            },
+            resetToDefaultTime: {
+                type: Boolean,
+                default: false,
+            },
             singleDate: {
                 type: Boolean,
                 default: false,
@@ -71,8 +89,8 @@
             },
             __onChange: function (data) {
                 if (this.resetToDefaultTime) {
-                    this.modelInnerStartTime = DEFAULT_START_TIME;
-                    this.modelInnerEndTime = DEFAULT_END_TIME;
+                    this.modelInnerStartTime = this.defaultStartTime;
+                    this.modelInnerEndTime = this.defaultEndTime;
                 }
                 return this.singleDate
                     ? this._onChangeSingleDate(data)
@@ -145,6 +163,8 @@
                     ref="datePickerRef"
                     :startDate="innerStartDate"
                     :endDate="innerEndDate"
+                    :min="min"
+                    :max="max"
                     @onChange="__onChange"
                     :singleDate="singleDate"
                 />

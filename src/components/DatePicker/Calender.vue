@@ -27,6 +27,14 @@
                 type: Boolean,
                 default: false,
             },
+            min: {
+                type: Date,
+                required: false,
+            },
+            max: {
+                type: Date,
+                required: false,
+            },
         },
         methods: {
             callOnChange: function (returnData) {
@@ -107,6 +115,14 @@
 
                 return '';
             },
+            betweenMinMax: function (day, whichMonth = 'current') {
+                if(this.singleDate){
+                    return false
+                } else if(this.min && this.max) {
+                    const currentDay = this.getSelectedDayDateObject(day, whichMonth);
+                    return currentDay.getTime() >= this.min.getTime() && currentDay.getTime() <= this.max.getTime()
+                }
+            },
         },
         computed: {
             startWeekday: function () {
@@ -152,38 +168,61 @@
             <template v-if="!ignoreStartWeekDay" v-for="(day, key) in startWeekday">
                 <li class="day" :key="'before' + key">
                     <span
-                        v-if="!singleDate"
+                        v-if="betweenMinMax(day,'prev')"
                         class="nullBlock"
                         :class="getDayStyle(day,'prev')"
                         @click="updateSelectingDay(day,'prev')"
-                    >{{substractDayPrevMonth(day)}}
+                    >
+                        {{substractDayPrevMonth(day)}}
+                    </span>
+                    <span
+                        v-else-if="!singleDate"
+                        class="nullBlock disabled"
+                    >
+                        {{substractDayPrevMonth(day)}}
                     </span>
                 </li>
             </template>
             <template v-for="(day, key) in daysCount">
                 <li class="day" :key="'day' + key">
                     <span
-                        v-if="!singleDate"
+                        v-if="betweenMinMax(day,'current')"
                         :class="getDayStyle(day)"
                         @click="updateSelectingDay(day)"
-                    >{{ day }}
+                    >
+                        {{ day }}
                     </span>
                     <span
-                        v-if="singleDate"
+                        v-else-if="!singleDate"
+                        class="disabled"
+                        :class="getDayStyle(day)"
+                    >
+                        {{ day }}
+                    </span>
+                    <span
+                        v-else="singleDate"
                         :class="getDayStyle(day)"
                         @click="updateSelectingSingleDay(day)"
-                    >{{ day }}
+                    >
+                        {{ day }}
                     </span>
                 </li>
             </template>
             <template v-if="!ignoreStartWeekDay" v-for="(day, key) in endWeekday">
                 <li class="day" :key="'after' + key">
                     <span
-                        v-if="!singleDate"
+                        v-if="betweenMinMax(day,'next')"
                         class="nullBlock"
                         :class="getDayStyle(day,'next')"
                         @click="updateSelectingDay(day,'next')"
-                    >{{day}}
+                    >
+                        {{day}}
+                    </span>
+                    <span
+                        v-else-if="!singleDate"
+                        class="nullBlock disabled"
+                    >
+                        {{day}}
                     </span>
                 </li>
             </template>
@@ -206,6 +245,11 @@
 
             .nullBlock {
                 opacity: 0.35;
+            }
+            .disabled {
+                background-color: lightgray !important;
+                color: rgba(82, 88, 98, 0.4) !important;
+                cursor: default !important;
             }
         }
 

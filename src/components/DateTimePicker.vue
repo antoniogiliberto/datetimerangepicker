@@ -34,9 +34,31 @@
                 default: 1,
                 required: false
             },
+            min: {
+                type: Date,
+                required: false
+            },
+            max: {
+                type: Date,
+                required: false
+            },
+            defaultStartTime: {
+                type: String,
+                default: '00:00',
+                required: false
+            },
+            defaultEndTime: {
+                type: String,
+                default: '23:59',
+                required: false
+            },
             format: {
                 type: String,
                 default: "YYYY MMM DD HH:mm A"
+            },
+            resetToDefaultTime: {
+                type: Boolean,
+                default: true
             },
             singleDate: {
                 type: Boolean,
@@ -153,17 +175,21 @@
         </a>
 
         <date-time-picker-modal
-            :class="{ fadeInDown: isOpen }"
-            :resetToDefaultTime="true"
-            :singleDate="singleDate"
+            :min="min"
+            :max="max"
+            :format="format"
             :endDate="endDate"
             :startDate="startDate"
+            :singleDate="singleDate"
+            :defaultEndTime="defaultEndTime"
+            :defaultStartTime="defaultStartTime"
+            :resetToDefaultTime="resetToDefaultTime"
+            :clock-allowed-minutes="clockAllowedMinutes"
+            :class="{ fadeInDown: isOpen }"
             :style="{
                 marginLeft: `-${shiftMarginLeft}px`,
                 marginTop: `-${shiftMarginHeight}px`
             }"
-            :format="format"
-            :clock-allowed-minutes="clockAllowedMinutes"
             @cancelHandler="isOpen = false"
             @submitHandler="submitHandler"
             v-if="isOpen"

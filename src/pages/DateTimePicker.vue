@@ -5,6 +5,11 @@
             <DateTimePicker
                 v-bind:date-range.sync="dateRange"
                 :singleDate="singleDate"
+                :min="new Date('2019-10-15 01:12:00')"
+                :max="new Date('2020-03-15 15:00:00')"
+                :reset-to-default-time="true"
+                default-start-time="00:00"
+                default-end-time="23:59"
                 format="YYYY MMM DD HH:mm A"
             />
             <button @click="dateRange.from = new Date('2018-01-01 00:00:00').getTime()">Last year</button>
