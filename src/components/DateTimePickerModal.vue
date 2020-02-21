@@ -3,6 +3,7 @@
     import DatePicker from './DatePicker/index.vue';
     import utils from '../lib/date';
     import {getTimeObjectFromDate} from '../lib/time';
+    import Times from "./Icons/Times";
 
     const DEFAULT_START_TIME = '00:00';
     const DEFAULT_END_TIME = '00:00';
@@ -12,6 +13,7 @@
         components: {
             DatePicker,
             TimePicker,
+            Times,
         },
         data() {
             const today = new Date();
@@ -149,17 +151,6 @@
             </div>
             <div class="timeContainer">
                 <v-container fluid data-app>
-                    <v-row no-gutters>
-                        <v-spacer />
-                        <v-btn v-if="showClock"
-                               text
-                               icon
-                               ripple
-                               @click="showClock = false"
-                        >
-                            <v-icon color="primary">fas fa-times</v-icon>
-                        </v-btn>
-                    </v-row>
                     <v-row v-if="!showClock" class="startTime timeRow">
                         <span class="subTitle">From</span>
                         <div>
@@ -193,6 +184,19 @@
                         />
                     </v-row>
                     <v-row v-else>
+                        <v-row no-gutters>
+                            <v-spacer />
+                            <v-btn
+                                text
+                                icon
+                                ripple
+                                small
+                                class="times"
+                                @click="showClock = false"
+                            >
+                                <span class="icon"> <times /> </span>
+                            </v-btn>
+                        </v-row>
                         <v-time-picker
                             no-title
                             format="24hr"
@@ -231,6 +235,16 @@
             .timeContainer {
                 padding: 0;
                 width: 300px;
+
+                .times {
+                    position: absolute;
+                    z-index: 10;
+                    right: 30px;
+                    top: 60px;
+                    .icon {
+                        margin-top: 4px;
+                    }
+                }
 
                 .timeRow {
                     display: flex;
