@@ -43,14 +43,8 @@
                 default: 1,
                 required: false
             },
-            min: {
-                type: Date,
-                default: new Date('January 1, 1970')
-            },
-            max: {
-                type: Date,
-                default: new Date('January 1, 210')
-            },
+            min: null, // expects instance of Date
+            max: null, // expects instance of Date
             defaultStartTime: {
                 type: String,
                 default: '00:00',
