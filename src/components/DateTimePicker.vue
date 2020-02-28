@@ -159,13 +159,14 @@
             @click="openHandler"
             class="calendarTrigger"
         >
-            <icon-calendar class="iconCalendar"/>
+            <icon-calendar class="iconCalendar before"/>
             <input
                 :value="dateString"
                 class="calendarInput"
                 readonly="readonly"
                 type="text"
             />
+            <icon-calendar class="iconCalendar after"/>
         </a>
 
         <date-time-picker-modal
