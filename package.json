@@ -6,7 +6,7 @@
   "browser": {
     "./sfc": "src/components/datetimepicker.vue"
   },
-  "version": "1.1.19",
+  "version": "1.1.20",
   "scripts": {
     "precommit": "lint-staged; npm test",
     "dev": "npm run serve",
@@ -21,7 +21,7 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "vue": "^2.6.10",
-    "vuetify": "2.2.4"
+    "vuetify": "2.2.14"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.2",
