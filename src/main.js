@@ -3,7 +3,7 @@ import App from "./App.vue";
 import 'vuetify/dist/vuetify.min.css';
 import VueHighlightJS from 'vue-highlightjs'
 //import '@fortawesome/fontawesome-free/css/all.css'
-import Vuetify from 'vuetify'
+import Vuetify from 'vuetify/lib'
 
 Vue.use(Vuetify)
 Vue.use(VueHighlightJS)
