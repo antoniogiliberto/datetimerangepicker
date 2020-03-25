@@ -40,7 +40,7 @@
       <span>{{ dateTimePickerValue }}</span>
       <DateTimePicker
         :singleDate="singleDate"
-        
+
         @onChange="dateTimePickerValue = $event"
         :alignRight="alignRight"
       />

@@ -14,20 +14,62 @@
 
     export default {
         name: "DateTimePicker",
-        components: {DateTimePickerModal, iconCalendar},
+        components: {
+            DateTimePickerModal,
+            iconCalendar
+        },
+        data() {
+            return {
+                isOpen: false,
+                shiftMarginLeft: 0,
+                shiftMarginHeight: 0
+            }
+        },
         props: {
             dateRange: {
                 type: Object
+            },
+            clockAllowedMinutes: {
+                type: Number,
+                default: 1,
+                required: false
+            },
+            min: null, // expects instance of Date
+            max: null, // expects instance of Date
+            defaultStartTime: {
+                type: String,
+                default: '00:00',
+                required: false
+            },
+            defaultEndTime: {
+                type: String,
+                default: '23:59',
+                required: false
             },
             format: {
                 type: String,
                 default: "YYYY MMM DD HH:mm A"
             },
+            resetToDefaultTime: {
+                type: Boolean,
+                default: true
+            },
             singleDate: {
                 type: Boolean,
                 default: false
             },
+            clickOutside: {
+                type: Boolean,
+            },
             onChange: Function
+        },
+        watch: {
+            clickOutside: {
+                handler() {
+                    this.isOpen = false
+                    this.$emit("isOpen", this.isOpen)
+                }
+            }
         },
         methods: {
             calculateShift: function () {
@@ -102,13 +144,6 @@
                 return (typeof this.dateRange.to === 'object') ? this.dateRange.to : new Date(this.dateRange.to)
             },
         },
-        data() {
-            return {
-                isOpen: false,
-                shiftMarginLeft: 0,
-                shiftMarginHeight: 0
-            }
-        },
         // beforeMount() {
         //     let startDate = (typeof this.startDate === 'object') ? this.startDate : new Date(this.startDate)
         //     let endDate = (typeof this.endDate === 'object') ? this.endDate : new Date(this.endDate)
@@ -124,26 +159,32 @@
             @click="openHandler"
             class="calendarTrigger"
         >
-            <icon-calendar class="iconCalendar"/>
+            <icon-calendar class="iconCalendar before"/>
             <input
                 :value="dateString"
                 class="calendarInput"
                 readonly="readonly"
                 type="text"
             />
+            <icon-calendar class="iconCalendar after"/>
         </a>
 
         <date-time-picker-modal
-            :class="{ fadeInDown: isOpen }"
-            :resetToDefaultTime="true"
-            :singleDate="singleDate"
+            :min="min"
+            :max="max"
+            :format="format"
             :endDate="endDate"
             :startDate="startDate"
+            :singleDate="singleDate"
+            :defaultEndTime="defaultEndTime"
+            :defaultStartTime="defaultStartTime"
+            :resetToDefaultTime="resetToDefaultTime"
+            :clock-allowed-minutes="clockAllowedMinutes"
+            :class="{ fadeInDown: isOpen }"
             :style="{
-        marginLeft: `-${shiftMarginLeft}px`,
-        marginTop: `-${shiftMarginHeight}px`
-      }"
-            :format="format"
+                marginLeft: `-${shiftMarginLeft}px`,
+                marginTop: `-${shiftMarginHeight}px`
+            }"
             @cancelHandler="isOpen = false"
             @submitHandler="submitHandler"
             v-if="isOpen"
