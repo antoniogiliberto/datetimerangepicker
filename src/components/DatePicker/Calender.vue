@@ -227,7 +227,7 @@
     @import "../../style/main.scss";
 
     ul.calendar {
-        width: 364px;
+        width: 372px;
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
@@ -235,10 +235,10 @@
 
         li {
             display: inline-block;
-            width: 52px;
+            width: calc(100% / 7);
 
             .nullBlock {
-                opacity: 0.35;
+                opacity: 0.75;
             }
             .disabled {
                 background-color: lightgray !important;

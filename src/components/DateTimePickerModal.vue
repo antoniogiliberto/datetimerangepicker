@@ -63,6 +63,10 @@
                 type: Boolean,
                 default: false,
             },
+            showDial: {
+                type: Boolean,
+                default: false
+            }
         },
         watch: {
             modelTimepicker(time){
@@ -163,7 +167,7 @@
                     :singleDate="singleDate"
                 />
             </div>
-            <div class="timeContainer">
+            <div class="timeContainer" v-if="showDial">
                 <v-container fluid data-app>
                     <v-row v-if="!showClock" class="startTime timeRow">
                         <span class="subTitle">From</span>
@@ -220,6 +224,36 @@
                         />
                     </v-row>
                 </v-container>
+            </div>
+            <div class="timeContainer" v-else>
+                <div class="startTime timeRow">
+                    <span class="subTitle">From</span>
+                    <div>
+                        <span class="bigNumber">{{ innerStartDate.getDate() }}</span>
+                        {{ getShortMonth(innerStartDate.getMonth()) }}
+                        {{ innerStartDate.getFullYear() }}
+                    </div>
+                    <time-picker
+                            :format="timeFormat"
+                            :minute-interval="5"
+                            v-bind:value="defaultStartTime"
+                            @change="_onChangeTimeStart"
+                    />
+                </div>
+                <div class="endTime timeRow" v-if="!singleDate">
+                    <span class="subTitle">To</span>
+                    <div>
+                        <span class="bigNumber">{{ innerEndDate.getDate() }}</span>
+                        {{ getShortMonth(innerEndDate.getMonth()) }}
+                        {{ innerEndDate.getFullYear() }}
+                    </div>
+                    <time-picker
+                            :format="timeFormat"
+                            :minute-interval="5"
+                            v-bind:value="defaultEndTime"
+                            @change="_onChangeTimeEnd"
+                    />
+                </div>
             </div>
         </div>
         <div class="buttonWrap">
