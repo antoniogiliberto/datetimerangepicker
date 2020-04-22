@@ -15,6 +15,14 @@
       @click.stop="clearTime"
       >&times;</span
     >
+    <span
+            class="confirm-btn"
+            v-if="hour && minute"
+            v-show="showDropdown"
+            @click.stop="toggleDropdown"
+    >
+      SET
+    </span>
     <div
       class="time-picker-overlay"
       v-if="showDropdown"
@@ -79,7 +87,7 @@ import {
 export default {
   name: "VueTimepicker",
   props: {
-    value: { type: Object },
+    value: {  },
     hideClearButton: { type: Boolean },
     format: { type: String },
     minuteInterval: { type: Number },
@@ -200,11 +208,23 @@ export default {
       });
     },
     readValues() {
+      let objValue
+
       if (!this.value || this.muteWatch) {
         return;
       }
+      if(typeof this.value === 'string'){
+        const values = this.value.split(':');
+        objValue = {
+          [this.hourType]: values[0],
+          [this.minuteType]: values[1],
+        }
+      } else {
+        objValue = this.value
+      }
 
-      const timeValue = JSON.parse(JSON.stringify(this.value || {}));
+
+      const timeValue = JSON.parse(JSON.stringify(objValue || {}));
 
       const values = Object.keys(timeValue);
       if (values.length === 0) {
@@ -432,6 +452,22 @@ export default {
     &:hover {
       color: $dark;
       cursor: pointer;
+    }
+  }
+  .confirm-btn {
+    display: block;
+    top: 13px;
+    right: 13px;
+    background: green;
+    position: absolute;
+    color: white;
+    padding: 4px;
+    border-radius: 8px;
+    font-size: 12px;
+    z-index: 6;
+    cursor: pointer;
+    &:hover {
+      opacity: .8;
     }
   }
   .time-picker-overlay {

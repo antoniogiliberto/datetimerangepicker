@@ -148,6 +148,17 @@
                 const {startDate} = data;
                 this.innerStartDate = startDate;
             },
+
+
+            _onChangeTimeStart: function(val) {
+                return this._onChangeTime("innerStartTime", val);
+            },
+            _onChangeTimeEnd: function(val) {
+                return this._onChangeTime("innerEndTime", val);
+            },
+            _onChangeTime: function(field, val) {
+                this[field] = val.data;
+            }
         },
     };
 </script>
