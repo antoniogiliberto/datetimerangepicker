@@ -61,6 +61,10 @@
             clickOutside: {
                 type: Boolean,
             },
+            divider: {
+                type: String,
+                default: 'to'
+            },
             onChange: Function
         },
         watch: {
@@ -108,7 +112,7 @@
                 const {startDate, endDate} = data
                 return singleDate
                     ? _getDateString(startDate, format)
-                    : `${_getDateString(startDate, format)} - ${_getDateString(
+                    : `${_getDateString(startDate, format)} ${this.divider} ${_getDateString(
                         endDate,
                         format
                     )}`
