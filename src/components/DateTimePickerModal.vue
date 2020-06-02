@@ -66,6 +66,10 @@
             showDial: {
                 type: Boolean,
                 default: false
+            },
+            timeFormat: {
+                type: String,
+                default: 'HH:mm'
             }
         },
         watch: {
@@ -151,13 +155,13 @@
 
 
             _onChangeTimeStart: function(val) {
-                return this._onChangeTime("innerStartTime", val);
+                return this._onChangeTime("modelInnerStartTime", val);
             },
             _onChangeTimeEnd: function(val) {
-                return this._onChangeTime("innerEndTime", val);
+                return this._onChangeTime("modelInnerEndTime", val);
             },
             _onChangeTime: function(field, val) {
-                this[field] = val.data;
+                this[field] = val.data.HH + ":" + val.data.mm;
             }
         },
     };
@@ -247,7 +251,7 @@
                     <time-picker
                             :format="timeFormat"
                             :minute-interval="5"
-                            v-bind:value="defaultStartTime"
+                            v-bind:value="modelInnerStartTime || defaultStartTime"
                             @change="_onChangeTimeStart"
                     />
                 </div>
@@ -261,7 +265,7 @@
                     <time-picker
                             :format="timeFormat"
                             :minute-interval="5"
-                            v-bind:value="defaultEndTime"
+                            v-bind:value="modelInnerEndTime || defaultEndTime"
                             @change="_onChangeTimeEnd"
                     />
                 </div>
