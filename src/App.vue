@@ -13,52 +13,6 @@
     <component v-bind:is="currentTabComponent"></component>
   </keep-alive>
 
-    <section class="componentContainer" v-if="tapIndex === 1">
-      <h1>Calender</h1>
-      <span>{{ calenderValue }}</span>
-      <Calender
-        :month="currentMonth"
-        :year="currentYear"
-        :startDate="startDate"
-        :endDate="endDate"
-        :singleDate="singleDate"
-        @onChange="calenderValue = $event"
-      />
-    </section>
-
-    <section class="componentContainer" v-if="tapIndex === 2">
-      <h1>DatePicker</h1>
-      <span>{{ datePickerValue }}</span>
-      <DatePicker
-        :singleDate="singleDate"
-        @onChange="datePickerValue = $event"
-      />
-    </section>
-
-    <section class="componentContainer" v-if="tapIndex === 3">
-      <h1>DateTimePicker</h1>
-      <span>{{ dateTimePickerValue }}</span>
-      <DateTimePicker
-        :singleDate="singleDate"
-
-        @onChange="dateTimePickerValue = $event"
-        :alignRight="alignRight"
-      />
-    </section>
-
-    <section class="componentContainer" v-if="tapIndex === 4">
-      <h1>DateTimePickerModal</h1>
-      <span>{{ dateTimePickerModalValue }}</span>
-      <form>
-        <date-time-picker-modal
-          @cancelHandler="cancelHandler"
-          @submitHandler="dateTimePickerModalValue = $event"
-          :startDate="startDate"
-          :endDate="endDate"
-          :singleDate="singleDate"
-        />
-      </form>
-    </section>
   </div>
 </template>
 
@@ -71,6 +25,7 @@ import Calender from "./components/DatePicker/Calender.vue";
 
 import TimePickerPage from "./pages/TimePicker.vue";
 import DateTimePickerPage from "./pages/DateTimePicker.vue";
+
 
 export default {
   name: "app",

@@ -35,6 +35,10 @@
             };
         },
         props: {
+            heatMapData: {
+                type: Object,
+                default: () => null
+            },
             submitHandler: Function,
             startDate: Date,
             endDate: Date,
@@ -178,6 +182,7 @@
                     :endDate="innerEndDate"
                     :min="min"
                     :max="max"
+                    :heatMapData="heatMapData"
                     @onChange="__onChange"
                     :singleDate="singleDate"
                 />

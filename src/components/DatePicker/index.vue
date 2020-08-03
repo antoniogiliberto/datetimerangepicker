@@ -7,6 +7,10 @@
         name: 'DatePicker',
         components: {Arrow, Calender},
         props: {
+            heatMapData: {
+                type: Object,
+                default: () => null
+            },
             startDate: Date,
             endDate: Date,
             singleDate: {
@@ -103,6 +107,7 @@
             </div>
 
             <calender
+                :heatMapData="heatMapData"
                 :endDate="innerEndDate"
                 :singleDate="singleDate"
                 :startDate="innerStartDate"

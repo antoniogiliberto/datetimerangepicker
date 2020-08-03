@@ -12,6 +12,8 @@
         return moment(date).format(format)
     }
 
+
+
     export default {
         name: "DateTimePicker",
         components: {
@@ -26,6 +28,10 @@
             }
         },
         props: {
+            heatMapData: {
+                type: Object,
+                default: () => null
+            },
             dateRange: {
                 type: Object
             },
@@ -185,6 +191,7 @@
             :resetToDefaultTime="resetToDefaultTime"
             :clock-allowed-minutes="clockAllowedMinutes"
             :class="{ fadeInDown: isOpen }"
+            :heatMapData="heatMapData"
             :style="{
                 marginLeft: `-${shiftMarginLeft}px`,
                 marginTop: `-${shiftMarginHeight}px`

@@ -11,9 +11,15 @@
         return false;
     };
 
+
+
     export default {
         name: 'Calender',
         props: {
+            heatMapData: {
+                type: Object,
+                default: () => null
+            },
             year: Number,
             month: Number,
             startDate: Date,
@@ -117,8 +123,42 @@
                     return currentDay.getTime() >= this.min.getTime() && currentDay.getTime() <= this.max.getTime()
                 }
             },
+            getHeatMapColor(day){
+                if(this.heatMapData){
+
+                    const dt = new Date(this.year, this.month, day).getTime()
+                    // console.log(dt)
+                    const i = Math.floor((dt - this.heatMapData.startTime) / 86400e3)
+                    if(!this.heatMapData.dailyData[i]){
+                        return { color: null, value: null, r: null, g: null, b: null }
+                    }
+                    // console.log(this.year, this.month, day, this.heatMapData)
+                    const value = this.heatMapData.dailyData[i] // this.dailyDataMax
+                    const rgb = this.rgb(0, this.dailyDataMax, this.dailyDataMax - value)
+                    // console.log(i, value, rgb)
+                    return { ...rgb, value, color: `rgb(${rgb.r},${rgb.g},${rgb.b})` }
+                }
+            },
+            rgb(minimum, maximum, value){
+                const ratio = 2 * (value-minimum) / (maximum - minimum)
+                // let b = Math.floor(Math.max(0, 255 * (1 - ratio)))
+                let b = 0
+                let r = Math.floor(Math.max(0, 255 * (1 - ratio)))
+                let g = (255 - b - r) * 1.5
+                return { r, g, b }
+            }
         },
         computed: {
+            dailyDataMax(){
+                if(this.heatMapData){
+                    return Math.max(...this.heatMapData.dailyData)
+                }
+            },
+            dailyDataMin(){
+                if(this.heatMapData){
+                    return Math.min(...this.heatMapData.dailyData)
+                }
+            },
             startWeekday: function () {
                 const weekday = utils.getWeekday(
                     new Date(`${this.year}-${this.month + 1}-01`).getTime(),
@@ -148,6 +188,9 @@
                 innerEndDate: singleDate ? startDate : endDate,
             };
         },
+        mounted() {
+            console.log(this.heatMapData)
+        }
     };
 </script>
 
@@ -183,6 +226,10 @@
                         v-if="betweenMinMax(day,'current')"
                         :class="getDayStyle(day)"
                         @click="updateSelectingDay(day)"
+                        :style="{
+                            backgroundColor: getHeatMapColor(day).color
+                        }"
+                        :title="getHeatMapColor(day).value"
                     >
                         {{ day }}
                     </span>
@@ -190,6 +237,10 @@
                         v-else-if="!singleDate"
                         class="disabled"
                         :class="getDayStyle(day)"
+                        :style="{
+                            backgroundColor: getHeatMapColor(day).color
+                        }"
+                        :title="getHeatMapColor(day).value"
                     >
                         {{ day }}
                     </span>
@@ -197,6 +248,10 @@
                         v-else="singleDate"
                         :class="getDayStyle(day)"
                         @click="updateSelectingSingleDay(day)"
+                        :style="{
+                            backgroundColor: getHeatMapColor(day).color
+                        }"
+                        :title="getHeatMapColor(day).value"
                     >
                         {{ day }}
                     </span>
@@ -209,6 +264,10 @@
                         class="nullBlock"
                         :class="getDayStyle(day,'next')"
                         @click="updateSelectingDay(day,'next')"
+                        :style="{
+                            backgroundColor: getHeatMapColor(day).color
+                        }"
+                        :title="getHeatMapColor(day).value"
                     >
                         {{day}}
                     </span>
