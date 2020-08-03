@@ -123,9 +123,15 @@
                     return currentDay.getTime() >= this.min.getTime() && currentDay.getTime() <= this.max.getTime()
                 }
             },
-            getHeatMapColor(day){
+            getHeatMapColor(day, prevMonth = false){
                 if(this.heatMapData){
-
+                    let month = this.month
+                    if(prevMonth){
+                        month--
+                        if(month < 0){
+                            month = 11
+                        }
+                    }
                     const dt = new Date(this.year, this.month, day).getTime()
                     // console.log(dt)
                     const i = Math.floor((dt - this.heatMapData.startTime) / 86400e3)
@@ -151,7 +157,11 @@
         computed: {
             dailyDataMax(){
                 if(this.heatMapData){
-                    return Math.max(...this.heatMapData.dailyData)
+                    const dtStart = new Date(this.year, this.month, 1).getTime()
+                    const iStart = Math.floor((dtStart - this.heatMapData.startTime) / 86400e3)
+                    const dtEnd = new Date(this.year, this.month + 1, 0).getTime()
+                    const iEnd = Math.floor((dtEnd - this.heatMapData.startTime) / 86400e3)
+                    return Math.max(...this.heatMapData.dailyData.slice(iStart, iEnd + 1))
                 }
             },
             dailyDataMin(){
@@ -209,12 +219,18 @@
                         class="nullBlock"
                         :class="getDayStyle(day,'prev')"
                         @click="updateSelectingDay(day,'prev')"
+                        :style="{
+                            borderColor: getHeatMapColor(day, true).color
+                        }"
                     >
                         {{substractDayPrevMonth(day)}}
                     </span>
                     <span
                         v-else-if="!singleDate"
                         class="nullBlock disabled"
+                        :style="{
+                            borderColor: getHeatMapColor(day, true).color
+                        }"
                     >
                         {{substractDayPrevMonth(day)}}
                     </span>
@@ -227,7 +243,7 @@
                         :class="getDayStyle(day)"
                         @click="updateSelectingDay(day)"
                         :style="{
-                            backgroundColor: getHeatMapColor(day).color
+                            borderColor: getHeatMapColor(day).color
                         }"
                         :title="getHeatMapColor(day).value"
                     >
@@ -238,7 +254,7 @@
                         class="disabled"
                         :class="getDayStyle(day)"
                         :style="{
-                            backgroundColor: getHeatMapColor(day).color
+                            borderColor: getHeatMapColor(day).color
                         }"
                         :title="getHeatMapColor(day).value"
                     >
@@ -249,7 +265,7 @@
                         :class="getDayStyle(day)"
                         @click="updateSelectingSingleDay(day)"
                         :style="{
-                            backgroundColor: getHeatMapColor(day).color
+                            borderColor: getHeatMapColor(day).color
                         }"
                         :title="getHeatMapColor(day).value"
                     >
@@ -265,7 +281,7 @@
                         :class="getDayStyle(day,'next')"
                         @click="updateSelectingDay(day,'next')"
                         :style="{
-                            backgroundColor: getHeatMapColor(day).color
+                            borderColor: getHeatMapColor(day).color
                         }"
                         :title="getHeatMapColor(day).value"
                     >
@@ -315,6 +331,7 @@
         }
 
         li.day {
+            position: relative;
             span {
                 width: 100%;
                 height: 40px;
@@ -325,6 +342,16 @@
                 font-weight: 600;
                 color: $slate-grey;
                 background: #fff;
+
+                &::after {
+                    border-bottom: 4px solid;
+                    border-color: inherit;
+                    content: '';
+                    position: absolute;
+                    bottom: 2px;
+                    left: 0;
+                    width: calc(100% - 0px);
+                }
 
                 &:hover {
                     cursor: pointer;
