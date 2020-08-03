@@ -135,15 +135,15 @@
                     const dt = new Date(this.year, this.month, day).getTime()
                     // console.log(dt)
                     const i = Math.floor((dt - this.heatMapData.startTime) / 86400e3)
-                    if(!this.heatMapData.dailyData[i]){
-                        return { color: null, value: null, r: null, g: null, b: null }
+                    if(this.heatMapData.dailyData[i]){
+                        // console.log(this.year, this.month, day, this.heatMapData)
+                        const value = this.heatMapData.dailyData[i] // this.dailyDataMax
+                        const rgb = this.rgb(0, this.dailyDataMax, this.dailyDataMax - value)
+                        // console.log(i, value, rgb)
+                        return { ...rgb, value, color: `rgb(${rgb.r},${rgb.g},${rgb.b})` }
                     }
-                    // console.log(this.year, this.month, day, this.heatMapData)
-                    const value = this.heatMapData.dailyData[i] // this.dailyDataMax
-                    const rgb = this.rgb(0, this.dailyDataMax, this.dailyDataMax - value)
-                    // console.log(i, value, rgb)
-                    return { ...rgb, value, color: `rgb(${rgb.r},${rgb.g},${rgb.b})` }
                 }
+                return { color: null, value: null, r: null, g: null, b: null }
             },
             rgb(minimum, maximum, value){
                 const ratio = 2 * (value-minimum) / (maximum - minimum)
@@ -197,9 +197,6 @@
                 innerStartDate: startDate,
                 innerEndDate: singleDate ? startDate : endDate,
             };
-        },
-        mounted() {
-            console.log(this.heatMapData)
         }
     };
 </script>
