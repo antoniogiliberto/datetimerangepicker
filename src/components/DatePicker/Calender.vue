@@ -11,8 +11,6 @@
         return false;
     };
 
-
-
     export default {
         name: 'Calender',
         props: {
@@ -83,6 +81,7 @@
                 }
             },
             updateSelectingDay: function (day, whichMonth = 'current') {
+
                 const { innerStartDate, isSelectingStartDay } = this;
                 const currentDay = this.getSelectedDayDateObject(day, whichMonth);
 
@@ -102,6 +101,14 @@
                     startDate: this.innerStartDate,
                     endDate: this.innerEndDate,
                 });
+            },
+
+            onDblClick() {
+                this.$emit('selectDay', {
+                    selectedDay: this.selectedDay,
+                    startDate: this.innerStartDate,
+                    endDate: this.innerEndDate,
+                })
             },
 
             getDayStyle: function (day, whichMonth = 'current') {
@@ -215,6 +222,7 @@
                         v-if="betweenMinMax(day,'prev')"
                         class="nullBlock"
                         :class="getDayStyle(day,'prev')"
+                        @dblclick="onDblClick"
                         @click="updateSelectingDay(day,'prev')"
                         :style="{
                             borderColor: getHeatMapColor(day, true).color
@@ -238,6 +246,7 @@
                     <span
                         v-if="betweenMinMax(day,'current')"
                         :class="getDayStyle(day)"
+                        @dblclick="onDblClick"
                         @click="updateSelectingDay(day)"
                         :style="{
                             borderColor: getHeatMapColor(day).color
@@ -276,6 +285,7 @@
                         v-if="betweenMinMax(day,'next')"
                         class="nullBlock"
                         :class="getDayStyle(day,'next')"
+                        @dblclick="onDblClick"
                         @click="updateSelectingDay(day,'next')"
                         :style="{
                             borderColor: getHeatMapColor(day).color

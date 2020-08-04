@@ -116,6 +116,7 @@
                 :month="currentMonth"
                 :year="currentYear"
                 @onChange="_onChange"
+                @selectDay="$emit('selectDay', $event)"
             />
         </div>
     </div>

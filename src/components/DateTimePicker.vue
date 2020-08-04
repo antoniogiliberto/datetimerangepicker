@@ -138,7 +138,7 @@
                     from: data.startDate.getTime(),
                     to: data.endDate.getTime(),
                 })
-            }
+            },
         },
         computed: {
             dateString: {

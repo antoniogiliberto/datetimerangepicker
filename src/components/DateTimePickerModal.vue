@@ -184,6 +184,7 @@
                     :max="max"
                     :heatMapData="heatMapData"
                     @onChange="__onChange"
+                    @selectDay="_submitMultiHandler"
                     :singleDate="singleDate"
                 />
             </div>
