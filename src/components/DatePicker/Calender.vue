@@ -116,7 +116,11 @@ export default {
             const currentDay = this.getSelectedDayDateObject(day, whichMonth);
 
             if (utils.isSameDay(currentDay, innerStartDate)) return 'innerStartDate';
-            if (utils.isSameDay(currentDay, innerEndDate)) return 'innerEndDate';
+            if (utils.isSameDay(currentDay, innerEndDate)) {
+                if(innerEndDate.getDate() !== innerStartDate.getDate() + 1 || innerEndDate.getHours() !== 0){
+                    return 'innerEndDate';
+                }
+            }
             if (isBetweenDays(innerStartDate, innerEndDate, currentDay)) return 'between';
             if (isToday(currentDay)) return 'today';
 
