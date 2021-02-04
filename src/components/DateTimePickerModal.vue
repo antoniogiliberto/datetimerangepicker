@@ -103,6 +103,9 @@
                     : this._onChangeMultiDate(data);
             },
             __onSubmit: function () {
+                if(this.modelInnerStartTime === ':' || this.modelInnerEndTime === ':'){
+                    return
+                }
                 return this.singleDate
                     ? this._submitSingleHandler()
                     : this._submitMultiHandler();
@@ -278,7 +281,13 @@
             </div>
         </div>
         <div class="buttonWrap">
-            <a class="confirm" @click.stop.prevent="__onSubmit">submit</a>
+            <a
+                :class="{
+                    submit: modelInnerStartTime !== ':' && modelInnerEndTime !== ':',
+                    cancel: modelInnerStartTime === ':' || modelInnerEndTime === ':',
+                }"
+                @click.stop.prevent="__onSubmit"
+            >submit</a>
             <a class="cancel" @click.stop.prevent="__onCancel">cancel</a>
         </div>
     </div>

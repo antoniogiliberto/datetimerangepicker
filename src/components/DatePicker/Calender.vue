@@ -117,11 +117,17 @@ export default {
 
             if (utils.isSameDay(currentDay, innerStartDate)) return 'innerStartDate';
             if (utils.isSameDay(currentDay, innerEndDate)) {
-                if(innerEndDate.getDate() !== innerStartDate.getDate() + 1 || innerEndDate.getHours() !== 0){
-                    return 'innerEndDate';
+                if(innerEndDate.getHours() === 0 && innerEndDate.getMinutes() === 0 && innerEndDate.getDate() === currentDay.getDate()){
+                    return ''
                 }
+                return 'innerEndDate';
             }
-            if (isBetweenDays(innerStartDate, innerEndDate, currentDay)) return 'between';
+            if (isBetweenDays(innerStartDate, innerEndDate, currentDay)) {
+                if(innerEndDate.getHours() === 0 && innerEndDate.getMinutes() === 0 && innerEndDate.getDate() === currentDay.getDate()){
+                    return ''
+                }
+                return 'between';
+            }
             if (isToday(currentDay)) return 'today';
 
             return '';
