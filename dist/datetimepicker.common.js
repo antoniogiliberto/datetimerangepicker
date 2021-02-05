@@ -4185,6 +4185,13 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 /***/ }),
 
+/***/ "318b":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "32a6":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6599,6 +6606,17 @@ module.exports = {};
 
 })));
 
+
+/***/ }),
+
+/***/ "4a74":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_7b6aadb5_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("318b");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_7b6aadb5_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_7b6aadb5_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+ /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_7b6aadb5_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -11572,17 +11590,6 @@ exports.f = __webpack_require__("9e1e") ? Object.defineProperty : function defin
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "86e3":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_0db1cb11_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("fa5e");
-/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_0db1cb11_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_0db1cb11_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* unused harmony reexport * */
- /* unused harmony default export */ var _unused_webpack_default_export = (_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_node_modules_css_loader_index_js_ref_8_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_2_node_modules_sass_loader_lib_loader_js_ref_8_oneOf_1_3_node_modules_vuetify_loader_lib_loader_js_ref_17_0_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Calender_vue_vue_type_style_index_0_id_0db1cb11_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -20669,7 +20676,7 @@ function _objectSpread(target) {
 
 "use strict";
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d2ef6622-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vuetify-loader/lib/loader.js??ref--17-0!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DatePicker/Calender.vue?vue&type=template&id=0db1cb11&scoped=true&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"d2ef6622-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vuetify-loader/lib/loader.js??ref--17-0!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/DatePicker/Calender.vue?vue&type=template&id=7b6aadb5&scoped=true&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('ul',{staticClass:"calendar"},[_vm._l((_vm.weekdays),function(weekday,key){return [_c('li',{key:'weekday' + key,staticClass:"weekday"},[_c('span',[_vm._v(_vm._s(weekday))])])]}),_vm._l((_vm.startWeekday),function(day,key){return (!_vm.ignoreStartWeekDay)?[_c('li',{key:'before' + key,staticClass:"day"},[(_vm.betweenMinMax(day,'prev'))?_c('span',{staticClass:"nullBlock",class:_vm.getDayStyle(day,'prev'),style:({
                         borderColor: _vm.getHeatMapColor(_vm.substractDayPrevMonth(day), true).color
                     }),on:{"dblclick":_vm.onDblClick,"click":function($event){return _vm.updateSelectingDay(day,'prev')}}},[_vm._v("\n                    "+_vm._s(_vm.substractDayPrevMonth(day))+"\n                ")]):(!_vm.singleDate)?_c('span',{staticClass:"nullBlock disabled",style:({
@@ -20688,7 +20695,7 @@ var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._sel
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/DatePicker/Calender.vue?vue&type=template&id=0db1cb11&scoped=true&
+// CONCATENATED MODULE: ./src/components/DatePicker/Calender.vue?vue&type=template&id=7b6aadb5&scoped=true&
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/helpers/esm/toConsumableArray.js + 3 modules
 var toConsumableArray = __webpack_require__("75fc");
@@ -20891,7 +20898,7 @@ var isBetweenDays = function isBetweenDays(smallDay, bigDay, currentDay) {
 
         var dt = new Date(year, month, day).getTime(); // console.log(dt, this.heatMapData.startTime)
 
-        var i = Math.floor((dt - this.heatMapData.startTime) / 86400e3) + 1;
+        var i = Math.floor((dt - this.heatMapData.startTime) / 86400e3);
 
         if (dt < Date.now() && this.heatMapData.dailyData[i]) {
           // console.log(this.year, month, day, this.heatMapData)
@@ -20983,8 +20990,8 @@ var isBetweenDays = function isBetweenDays(smallDay, bigDay, currentDay) {
 });
 // CONCATENATED MODULE: ./src/components/DatePicker/Calender.vue?vue&type=script&lang=js&
  /* harmony default export */ var DatePicker_Calendervue_type_script_lang_js_ = (Calendervue_type_script_lang_js_); 
-// EXTERNAL MODULE: ./src/components/DatePicker/Calender.vue?vue&type=style&index=0&id=0db1cb11&lang=scss&scoped=true&
-var Calendervue_type_style_index_0_id_0db1cb11_lang_scss_scoped_true_ = __webpack_require__("86e3");
+// EXTERNAL MODULE: ./src/components/DatePicker/Calender.vue?vue&type=style&index=0&id=7b6aadb5&lang=scss&scoped=true&
+var Calendervue_type_style_index_0_id_7b6aadb5_lang_scss_scoped_true_ = __webpack_require__("4a74");
 
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
@@ -21004,7 +21011,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   null,
-  "0db1cb11",
+  "7b6aadb5",
   null
   
 )
@@ -28517,13 +28524,6 @@ installComponents_default()(DateTimePickerModal_component, {VBtn: VBtn_VBtn,VCon
 
 module.exports = __webpack_require__("5537")('native-function-to-string', Function.toString);
 
-
-/***/ }),
-
-/***/ "fa5e":
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
