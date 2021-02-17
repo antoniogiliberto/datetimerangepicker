@@ -1,5 +1,5 @@
 <template>
-  <span class="time-picker">
+  <span class="time-picker" :class="{ 'time-picker--expanded': showDropdown}">
     <input
       class="display-time"
       :id="id"

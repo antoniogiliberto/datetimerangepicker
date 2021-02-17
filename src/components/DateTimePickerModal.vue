@@ -79,8 +79,14 @@
         },
         computed: {
             areTimesValid(){
-                return this.isValidTime(this.modelInnerStartTime) && this.isValidTime(this.modelInnerEndTime)
-            }
+                return this.isStartTimeValid && this.isEndTimeValid
+            },
+            isStartTimeValid(){
+                return this.isValidTime(this.modelInnerStartTime)
+            },
+            isEndTimeValid(){
+                return this.isValidTime(this.modelInnerEndTime)
+            },
         },
         watch: {
             modelTimepicker(time){
@@ -267,10 +273,11 @@
                         {{ innerStartDate.getFullYear() }}
                     </div>
                     <time-picker
-                            :format="timeFormat"
-                            :minute-interval="5"
-                            v-bind:value="modelInnerStartTime || defaultStartTime"
-                            @change="_onChangeTimeStart"
+                        :class="{'startTime--invalid': !isStartTimeValid}"
+                        :format="timeFormat"
+                        :minute-interval="5"
+                        v-bind:value="modelInnerStartTime || defaultStartTime"
+                        @change="_onChangeTimeStart"
                     />
                 </div>
                 <div class="endTime timeRow" v-if="!singleDate">
@@ -281,10 +288,11 @@
                         {{ innerEndDate.getFullYear() }}
                     </div>
                     <time-picker
-                            :format="timeFormat"
-                            :minute-interval="5"
-                            v-bind:value="modelInnerEndTime || defaultEndTime"
-                            @change="_onChangeTimeEnd"
+                        :class="{'endTime--invalid': !isEndTimeValid}"
+                        :format="timeFormat"
+                        :minute-interval="5"
+                        v-bind:value="modelInnerEndTime || defaultEndTime"
+                        @change="_onChangeTimeEnd"
                     />
                 </div>
             </div>
