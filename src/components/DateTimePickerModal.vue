@@ -4,6 +4,7 @@
     import utils from '../lib/date';
     import {getTimeObjectFromDate} from '../lib/time';
     import Times from "./Icons/Times";
+    import moment from "moment"
 
     export default {
         name: 'DateTimePickerModal',
@@ -76,6 +77,11 @@
                 default: 'HH:mm'
             }
         },
+        computed: {
+            areTimesValid(){
+                return this.isValidTime(this.modelInnerStartTime) && this.isValidTime(this.modelInnerEndTime)
+            }
+        },
         watch: {
             modelTimepicker(time){
                 this[`modelInner${this.clickedTimeField}Time`] = time
@@ -103,7 +109,7 @@
                     : this._onChangeMultiDate(data);
             },
             __onSubmit: function () {
-                if(this.modelInnerStartTime === ':' || this.modelInnerEndTime === ':'){
+                if(!this.areTimesValid){
                     return
                 }
                 return this.singleDate
@@ -169,6 +175,9 @@
             },
             _onChangeTime: function(field, val) {
                 this[field] = val.data.HH + ":" + val.data.mm;
+            },
+            isValidTime(timeString) {
+                return moment(timeString, 'HH:mm').isValid()
             }
         },
     };
@@ -283,8 +292,8 @@
         <div class="buttonWrap">
             <a
                 :class="{
-                    submit: modelInnerStartTime !== ':' && modelInnerEndTime !== ':',
-                    cancel: modelInnerStartTime === ':' || modelInnerEndTime === ':',
+                    submit: areTimesValid,
+                    cancel: !areTimesValid,
                 }"
                 @click.stop.prevent="__onSubmit"
             >submit</a>
