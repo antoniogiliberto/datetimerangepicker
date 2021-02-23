@@ -142,7 +142,16 @@ export default {
         },
         getHeatMapColor(day, prevMonth = false, nextMonth = false){
             if(this.heatMapData){
-                // console.log(this.heatMapData)
+                const value = this.heatMapValue(day, prevMonth, nextMonth)
+                if(value){
+                    const rgb = this.rgb(0, this.dailyDataMax, this.dailyDataMax - value)
+                    return { ...rgb, value, color: `rgba(${rgb.r},${rgb.g},${rgb.b}, 1)` }
+                }
+            }
+            return { color: 'rgba(0,0,0,0)', value: null, r: 0, g: 0, b: 0, a: 0 }
+        },
+        heatMapValue(day, prevMonth = false, nextMonth = false){
+            if(this.heatMapData){
                 let month = this.month
                 let year = this.year
                 if(prevMonth){
@@ -159,19 +168,13 @@ export default {
                     }
                 }
                 const dt = new Date(year, month, day).getTime()
-
                 // console.log(dt, this.heatMapData.startTime)
-                const i = Math.floor((dt - this.heatMapData.startTime) / 86400e3)
+                const i = Math.floor((dt - this.heatMapData.startTime) / 86400e3) + 1
                 if(dt < Date.now() && this.heatMapData.dailyData[i]){
                     // console.log(this.year, month, day, this.heatMapData)
-                    const value = this.heatMapData.dailyData[i] // this.dailyDataMax
-                    const rgb = this.rgb(0, this.dailyDataMax, this.dailyDataMax - value)
-                    // console.log(i, year, month, day, value, rgb)
-                    return { ...rgb, value, color: `rgba(${rgb.r},${rgb.g},${rgb.b}, 1)` }
+                    return this.heatMapData.dailyData[i] // this.dailyDataMax
                 }
-                // console.log( 'should not get here', i, year, month, day, prevMonth, nextMonth)
             }
-            return { color: 'rgba(0,0,0,0)', value: null, r: 0, g: 0, b: 0, a: 0 }
         },
         rgb(minimum, maximum, value){
             const ratio = 2 * (value-minimum) / (maximum - minimum)
@@ -273,10 +276,22 @@ export default {
                         @dblclick="onDblClick"
                         @click="updateSelectingDay(day)"
                         :style="{
-                            borderColor: getHeatMapColor(day).color
+                            borderColor: getHeatMapColor(day).color,
+                            position: 'relative'
                         }"
                     >
                         {{ day }}
+                        <!--                        <span style="-->
+                        <!--                            font-size: 7px;-->
+                        <!--                            font-weight: lighter;-->
+                        <!--                            margin-top: -50px;-->
+                        <!--                            position: absolute;-->
+                        <!--                            top: 38px;-->
+                        <!--                            border: transparent;-->
+                        <!--                            left: 0;-->
+                        <!--                        ">-->
+                        <!--                            {{heatMapValue(day)}}-->
+                        <!--                        </span>-->
                     </span>
                     <span
                         v-else-if="!singleDate"
