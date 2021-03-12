@@ -93,7 +93,8 @@ export default {
                 this.isSelectingStartDay = true;
             }
 
-            this.innerEndDate = currentDay;
+            // this.innerEndDate = currentDay;
+            this.innerEndDate = new Date(currentDay.getTime() + 86400);
             this.selectedDay = day;
 
             return this.callOnChange({
