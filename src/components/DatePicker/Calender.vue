@@ -170,7 +170,7 @@ export default {
                 }
                 const dt = new Date(year, month, day).getTime()
                 // console.log(dt, this.heatMapData.startTime)
-                const i = Math.floor((dt - this.heatMapData.startTime) / 86400e3) + 1
+                const i = Math.floor((dt - this.heatMapData.startTime + 7.2e6) / 86400e3)
                 if(dt < Date.now() && this.heatMapData.dailyData[i]){
                     // console.log(this.year, month, day, this.heatMapData)
                     return this.heatMapData.dailyData[i] // this.dailyDataMax
