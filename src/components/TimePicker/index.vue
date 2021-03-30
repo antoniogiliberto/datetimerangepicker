@@ -1,5 +1,5 @@
 <template>
-  <span class="time-picker" :class="{ 'time-picker--expanded': showDropdown}">
+  <span class="time-picker" :class="{ 'time-picker--expanded': showDropdown, 'time-picker--error': error }">
     <input
         class="display-time"
         :id="id"
@@ -92,7 +92,9 @@ export default {
         format: { type: String },
         minuteInterval: { type: Number },
         secondInterval: { type: Number },
-        id: { type: String }
+        id: { type: String },
+        min: { type: String },
+        max: { type: String },
     },
     data() {
         return {
@@ -115,6 +117,56 @@ export default {
     },
 
     computed: {
+        error(){
+            const time = this.value.split(':')
+            if(time.length){
+                const h = Number(time[0])
+                const m = Number(time[1])
+                if(h < this.minHours){
+                    return true
+                }
+                if(h === this.minHours && m <= this.minMinutes){
+                    return true
+                }
+                if(h > this.maxHours){
+                    return true
+                }
+                if(h === this.maxHours && m >= this.maxMinutes){
+                    return true
+                }
+            }
+            return false
+        },
+        minTime(){
+            return this.min ? this.min.split(':') : []
+        },
+        maxTime(){
+            return this.max ? this.max.split(':') : []
+        },
+        minMinutes(){
+            if(this.minTime.length && this.minTime[1].length){
+                return Number(this.minTime[1])
+            }
+            return 0
+        },
+        minHours(){
+            if(this.minTime.length && this.minTime[0].length){
+                return Number(this.minTime[0])
+            }
+            return 0
+        },
+        maxMinutes(){
+            if(this.maxTime.length && this.maxTime[1].length){
+                return Number(this.maxTime[1])
+            }
+            return 60
+        },
+        maxHours(){
+            if(this.maxTime.length && this.maxTime[0].length){
+                return Number(this.maxTime[0])
+            }
+            return 24
+        },
         displayTime() {
             let formatString = String(this.format || "HH:mm")
             if (this.hour) {
