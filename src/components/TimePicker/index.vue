@@ -30,7 +30,7 @@
     ></div>
     <div class="dropdown" v-show="showDropdown">
       <div class="select-list">
-        <ul class="hours">
+        <ul class="hours" @wheel="onScroll">
           <li class="hint" v-text="hourType"></li>
           <li
               v-for="(hr, key) in hours"
@@ -40,7 +40,7 @@
               :key="key + '-label'"
           ></li>
         </ul>
-        <ul class="minutes">
+        <ul class="minutes" @wheel="onScroll">
           <li class="hint" v-text="minuteType"></li>
           <li
               v-for="(m, key) in minutes"
@@ -213,6 +213,20 @@ export default {
     },
 
     methods: {
+        onScroll(e,d,f){
+            const ul = e.target.closest('ul')
+            if(ul.parentElement.clientHeight >= ul.scrollHeight) return
+            const currentY = ul.hasAttribute('data-y') ? Number(ul.getAttribute('data-y')) : 0
+            let y
+            if(e.deltaY < 0){
+                y = currentY + (ul.parentElement.clientHeight / 2)
+            } else {
+                y = currentY - (ul.parentElement.clientHeight / 2)
+            }
+            y = Math.max(Math.min(0, y), -(ul.scrollHeight - ul.parentElement.clientHeight))
+            ul.setAttribute('data-y', y)
+            ul.style.marginTop = `${y}px`
+        },
         initConfig(newFormat) {
             const { minuteInterval, secondInterval } = this
 
@@ -561,7 +575,8 @@ export default {
                 list-style: none;
                 flex: 1;
                 overflow-x: hidden;
-                overflow-y: auto;
+                overflow-y: hidden;
+                transition: all .2s;
 
                 &.minutes,
                 &.seconds,
@@ -572,7 +587,7 @@ export default {
                 li {
                     text-align: center;
                     padding: 6px 0;
-                    color: $dark;
+                    color: white;
 
                     &.active,
                     &.active:hover {
