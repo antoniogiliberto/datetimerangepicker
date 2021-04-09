@@ -75,7 +75,8 @@
             timeFormat: {
                 type: String,
                 default: 'HH:mm'
-            }
+            },
+            fixedSelection: null
         },
         computed: {
             areTimesValid(){
@@ -204,6 +205,7 @@
                     @onChange="__onChange"
                     @selectDay="_submitMultiHandler"
                     :singleDate="singleDate"
+                    :fixed-selection="fixedSelection"
                 />
             </div>
             <div class="timeContainer" v-if="showDial">

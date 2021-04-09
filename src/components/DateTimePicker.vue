@@ -71,7 +71,8 @@
                 type: String,
                 default: 'to'
             },
-            onChange: Function
+            onChange: Function,
+            fixedSelection: null
         },
         watch: {
             clickOutside: {
@@ -196,6 +197,7 @@
                 marginLeft: `-${shiftMarginLeft}px`,
                 marginTop: `-${shiftMarginHeight}px`
             }"
+            :fixed-selection="fixedSelection"
             @cancelHandler="isOpen = false"
             @submitHandler="submitHandler"
             v-if="isOpen"

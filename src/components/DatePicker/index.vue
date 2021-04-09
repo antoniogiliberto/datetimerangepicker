@@ -20,6 +20,7 @@
             min: null, // expects instance of Date
             max: null, // expects instance of Date
             onChange: Function,
+            fixedSelection: null
         },
         computed: {
             currentMonthString: function () {
@@ -115,6 +116,7 @@
                 :max="max"
                 :month="currentMonth"
                 :year="currentYear"
+                :fixed-selection="fixedSelection"
                 @onChange="_onChange"
                 @selectDay="$emit('selectDay', $event)"
             />

@@ -1,5 +1,6 @@
 <script>
 import utils from '../../lib/date';
+import moment from 'moment'
 
 const isToday = otherDay => {
     const today = new Date();
@@ -33,8 +34,28 @@ export default {
         },
         min: null, // expects instance of Date
         max: null, // expects instance of Date
+        fixedSelection: null
     },
     methods: {
+        onDayMouseEnter(day, whichMonth){
+            this.selectedDays = []
+            switch(this.fixedSelection){
+                case 'week':
+                    const d = moment(this.getSelectedDayDateObject(day, whichMonth)).startOf('isoWeek')
+                    for(let i = 0; i < 7; i++){
+                        this.selectedDays.push(`${d.month()}_${d.date()}`)
+                        d.add(1, 'day')
+                    }
+                default:
+            }
+        },
+        onDayMouseLeave(day, whichMonth){
+            this.selectedDays = []
+        },
+        getDateKey(day, whichMonth){
+            const d = moment(this.getSelectedDayDateObject(day, whichMonth))
+            return `${d.month()}_${d.date()}`
+        },
         callOnChange: function (returnData) {
             if (this.$listeners.onChange) {
                 return this.$emit('onChange', {...returnData});
@@ -81,27 +102,40 @@ export default {
             }
         },
         updateSelectingDay: function (day, whichMonth = 'current') {
-
             const { innerStartDate, isSelectingStartDay } = this;
             const currentDay = this.getSelectedDayDateObject(day, whichMonth);
+            if(!this.fixedSelection){
+                // reset
+                if (isSelectingStartDay || (!isSelectingStartDay && currentDay < innerStartDate)) {
+                    this.innerStartDate = currentDay;
+                    this.isSelectingStartDay = false;
+                } else {
+                    this.isSelectingStartDay = true;
+                }
 
-            // reset
-            if (isSelectingStartDay || (!isSelectingStartDay && currentDay < innerStartDate)) {
-                this.innerStartDate = currentDay;
-                this.isSelectingStartDay = false;
+                // this.innerEndDate = currentDay;
+                this.innerEndDate = new Date(currentDay.getTime() + 86400);
+                this.selectedDay = day;
+                return this.callOnChange({
+                    selectedDay: currentDay,
+                    startDate: this.innerStartDate,
+                    endDate: this.innerEndDate,
+                });
             } else {
-                this.isSelectingStartDay = true;
+                switch(this.fixedSelection){
+                    case 'week':
+                        const d = moment(this.getSelectedDayDateObject(day, whichMonth)).startOf('isoWeek')
+                        this.innerStartDate = new Date(d)
+                        this.innerEndDate = new Date(moment(d).endOf('isoWeek'))
+                        return this.callOnChange({
+                            selectedDay: currentDay,
+                            startDate: new Date(d),
+                            endDate: new Date(moment(d).endOf('isoWeek')),
+                        });
+                    default:
+                }
             }
 
-            // this.innerEndDate = currentDay;
-            this.innerEndDate = new Date(currentDay.getTime() + 86400);
-            this.selectedDay = day;
-
-            return this.callOnChange({
-                selectedDay: currentDay,
-                startDate: this.innerStartDate,
-                endDate: this.innerEndDate,
-            });
         },
 
         onDblClick() {
@@ -231,6 +265,7 @@ export default {
             weekdays: utils.weekDayShortConfig,
             innerStartDate: startDate,
             innerEndDate: singleDate ? startDate : endDate,
+            selectedDays: []
         };
     }
 };
@@ -245,7 +280,15 @@ export default {
                 </li>
             </template>
             <template v-if="!ignoreStartWeekDay" v-for="(day, key) in startWeekday">
-                <li class="day" :key="'before' + key">
+                <li
+                    class="day"
+                    :key="'before' + key"
+                    :class="{
+                        'day--selected': selectedDays.includes(getDateKey(day, 'prev'))
+                    }"
+                    @mouseenter="onDayMouseEnter(day, 'prev')"
+                    @mouseleave="onDayMouseLeave(day, 'prev')"
+                >
                     <span
                         v-if="betweenMinMax(day,'prev')"
                         class="nullBlock"
@@ -270,7 +313,15 @@ export default {
                 </li>
             </template>
             <template v-for="(day, key) in daysCount">
-                <li class="day" :key="'day' + key">
+                <li
+                    class="day"
+                    :key="'day' + key"
+                    :class="{
+                        'day--selected': selectedDays.includes(getDateKey(day))
+                    }"
+                    @mouseenter="onDayMouseEnter(day)"
+                    @mouseleave="onDayMouseLeave(day)"
+                >
                     <span
                         v-if="betweenMinMax(day,'current')"
                         :class="getDayStyle(day)"
@@ -317,7 +368,15 @@ export default {
                 </li>
             </template>
             <template v-if="!ignoreStartWeekDay" v-for="(day, key) in endWeekday">
-                <li class="day" :key="'after' + key">
+                <li
+                    class="day"
+                    :key="'after' + key"
+                    :class="{
+                        'day--selected': selectedDays.includes(getDateKey(day, 'next'))
+                    }"
+                    @mouseenter="onDayMouseEnter(day, 'next')"
+                    @mouseleave="onDayMouseLeave(day, 'next')"
+                >
                     <span
                         v-if="betweenMinMax(day,'next')"
                         class="nullBlock"
@@ -378,6 +437,11 @@ ul.calendar {
 
     li.day {
         position: relative;
+        &--selected {
+            span {
+                background: $secondary-01;
+            }
+        }
         span {
             width: 100%;
             height: 40px;
