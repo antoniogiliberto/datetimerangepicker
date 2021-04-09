@@ -1,6 +1,7 @@
 <script>
     import TimePicker from './TimePicker/index.vue';
     import DatePicker from './DatePicker/index.vue';
+    import MonthPicker from './DatePicker/MonthPicker.vue';
     import utils from '../lib/date';
     import {getTimeObjectFromDate} from '../lib/time';
     import Times from "./Icons/Times";
@@ -12,6 +13,7 @@
             DatePicker,
             TimePicker,
             Times,
+            MonthPicker
         },
         data() {
             const today = new Date();
@@ -146,7 +148,6 @@
                     innerStartDate: startDate,
                     innerEndDate: endDate,
                 } = this.$refs.datePickerRef;
-
                 const startDateString = utils.format(startDate, 'yy-mm-dd');
                 const endDateString = utils.format(endDate, 'yy-mm-dd');
                 const startDateObject = new Date(`${startDateString}T${this.modelInnerStartTime}`);
@@ -193,7 +194,7 @@
 <template>
 
     <div class="dateTimeWrapper">
-        <div class="containerWrapper">
+        <div v-if="fixedSelection !== 'month'" class="containerWrapper">
             <div class="dateContainer">
                 <DatePicker
                     ref="datePickerRef"
@@ -299,6 +300,15 @@
                 </div>
             </div>
         </div>
+        <month-picker
+            v-else
+            ref="datePickerRef"
+            :startDate="innerStartDate"
+            :endDate="innerEndDate"
+            :min="min"
+            :max="max"
+            @onChange="__onChange"
+        />
         <div class="buttonWrap">
             <a
                 :class="{
