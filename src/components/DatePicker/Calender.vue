@@ -125,11 +125,18 @@ export default {
                 switch(this.fixedSelection){
                     case 'week':
                         const d = moment(this.getSelectedDayDateObject(day, whichMonth)).startOf('isoWeek')
-                        this.innerStartDate = new Date(d)
+                        if (isSelectingStartDay || (!isSelectingStartDay && currentDay < innerStartDate)) {
+                            this.innerStartDate = new Date(d)
+                            this.isSelectingStartDay = false;
+                        } else {
+                            this.isSelectingStartDay = true;
+                        }
+
+
                         this.innerEndDate = new Date(moment(d).endOf('isoWeek'))
                         return this.callOnChange({
                             selectedDay: currentDay,
-                            startDate: new Date(d),
+                            startDate: this.innerStartDate,
                             endDate: new Date(moment(d).endOf('isoWeek')),
                         });
                     default:
