@@ -5,6 +5,10 @@ import moment from 'moment'
 export default {
     components: {Arrow},
     props: {
+        heatMapData: {
+            type: Object,
+            default: () => null
+        },
         startDate: Date,
         endDate: Date,
         min: null, // expects instance of Date
@@ -83,6 +87,36 @@ export default {
                 return this.onChange({...returnData});
             }
         },
+        getHeatMapColor(month){
+            if(this.heatMapData){
+                let value
+                for (let k in this.heatMapData.dailyData) {
+                    if(moment(k).month() === month && moment(k).year() === this.currentYear){
+                        value = this.heatMapData.dailyData[k]
+                        break
+                    }
+                }
+                if(value){
+                    const min = Math.min(...Object.values(this.heatMapData.dailyData))
+                    const max = Math.max(...Object.values(this.heatMapData.dailyData))
+                    const rgb = this.rgb(
+                        min,
+                        max,
+                        max - value
+                    )
+                    return { ...rgb, value, color: `rgba(${rgb.r},${rgb.g},${rgb.b}, 1)` }
+                }
+            }
+            return { color: 'rgba(0,0,0,0)', value: null, r: 0, g: 0, b: 0, a: 0 }
+        },
+        rgb(minimum, maximum, value){
+            const ratio = 2 * (value-minimum) / (maximum - minimum)
+            // let b = Math.floor(Math.max(0, 255 * (1 - ratio)))
+            let b = 0
+            let r = Math.floor(Math.max(0, 255 * (1 - ratio)))
+            let g = (255 - b - r) * 1.5
+            return { r, g, b }
+        }
     }
 }
 </script>
@@ -119,6 +153,9 @@ export default {
                     'month--disabled': isMonthDisabled(k),
                     'month--selected': isMonthSelected(k)
                 }"
+                :style="{
+                    borderColor: getHeatMapColor(k).color
+                }"
                 @click="onClick(k)"
             >
                 {{ month }}
@@ -141,6 +178,7 @@ export default {
             padding: 8px
             text-align: center
             cursor: pointer
+            position: relative
             &:hover
                 background-color: #3e82ff
             &--selected
@@ -148,5 +186,12 @@ export default {
             &--disabled
                 opacity: .3
                 pointer-events: none
-
+            &::after
+                border-bottom: 5px solid
+                border-color: inherit
+                content: ''
+                position: absolute
+                bottom: 0
+                left: 0
+                width: calc(100% - 0px)
 </style>

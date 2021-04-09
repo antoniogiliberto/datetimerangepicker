@@ -307,6 +307,7 @@
             :endDate="innerEndDate"
             :min="min"
             :max="max"
+            :heatMapData="heatMapData"
             @onChange="__onChange"
         />
         <div class="buttonWrap">
