@@ -186,7 +186,7 @@ export default {
             if(this.heatMapData){
                 const value = this.heatMapValue(day, prevMonth, nextMonth)
                 if(value){
-                    const rgb = this.rgb(0, this.dailyDataMax, this.dailyDataMax - value)
+                    const rgb = this.rgb(this.dailyDataMin, this.dailyDataMax, this.dailyDataMax - value)
                     return { ...rgb, value, color: `rgba(${rgb.r},${rgb.g},${rgb.b}, 1)` }
                 }
             }
@@ -219,11 +219,11 @@ export default {
             }
         },
         rgb(minimum, maximum, value){
-            const ratio = 2 * (value-minimum) / (maximum - minimum)
+            const ratio = (value-minimum) / (maximum - minimum)
             // let b = Math.floor(Math.max(0, 255 * (1 - ratio)))
             let b = 0
             let r = Math.floor(Math.max(0, 255 * (1 - ratio)))
-            let g = (255 - b - r) * 1.5
+            let g = (255 - b - r) * 1.2
             return { r, g, b }
         }
     },
@@ -242,7 +242,14 @@ export default {
         },
         dailyDataMin(){
             if(this.heatMapData){
-                return Math.min(...this.heatMapData.dailyData)
+                const dtStart = new Date(this.year, this.month, 1).getTime()
+                let iStart = Math.floor((dtStart - this.heatMapData.startTime) / 86400e3)
+                const dtEnd = new Date(this.year, this.month + 1, 0).getTime()
+                let iEnd = Math.floor((dtEnd - this.heatMapData.startTime) / 86400e3)
+                iStart = Math.max(0, iStart)
+                iEnd = Math.min(this.heatMapData.dailyData.length - 1, iEnd)
+                // console.log(iStart, iEnd)
+                return Math.min(...this.heatMapData.dailyData.slice(iStart, iEnd + 1))
             }
         },
         startWeekday: function () {
@@ -266,13 +273,17 @@ export default {
     },
     data() {
         const {month, startDate, endDate, singleDate} = this;
+        if(window){
+            window.__DP__ = this
+        }
         return {
             selectedDay: null,
             isSelectingStartDay: true, // either startDay or endDay
             weekdays: utils.weekDayShortConfig,
             innerStartDate: startDate,
             innerEndDate: singleDate ? startDate : endDate,
-            selectedDays: []
+            selectedDays: [],
+            debug: false
         };
     }
 };
@@ -340,17 +351,19 @@ export default {
                         }"
                     >
                         {{ day }}
-                        <!--                        <span style="-->
-                        <!--                            font-size: 7px;-->
-                        <!--                            font-weight: lighter;-->
-                        <!--                            margin-top: -50px;-->
-                        <!--                            position: absolute;-->
-                        <!--                            top: 38px;-->
-                        <!--                            border: transparent;-->
-                        <!--                            left: 0;-->
-                        <!--                        ">-->
-                        <!--                            {{heatMapValue(day)}}-->
-                        <!--                        </span>-->
+                        <span
+                            v-if="debug"
+                            style="
+                            font-size: 7px;
+                            font-weight: lighter;
+                            margin-top: -50px;
+                            position: absolute;
+                            top: 38px;
+                            border: transparent;
+                            left: 0;
+                        ">
+                            {{ Math.floor(heatMapValue(day) / 1000) }}
+                        </span>
                     </span>
                     <span
                         v-else-if="!singleDate"
