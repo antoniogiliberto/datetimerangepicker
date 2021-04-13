@@ -147,7 +147,7 @@ export default {
             if(this.minTime.length && this.minTime[1].length){
                 return Number(this.minTime[1])
             }
-            return 0
+            return -1
         },
         minHours(){
             if(this.minTime.length && this.minTime[0].length){
